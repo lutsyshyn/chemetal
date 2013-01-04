@@ -1,0 +1,4 @@
+object_path and object_url - difference?
+how to pass object's id for it's dependent object creation action?
+how to create/edit object and it's dependent objects using one form?
+has_one implementation?

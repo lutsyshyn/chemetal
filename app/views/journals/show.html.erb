@@ -1,0 +1,8 @@
+<% provide(:title, 'Journal') %>
+<%= link_to 'Back to journals index', journals_path %>
+<h1>Journal</h1>
+
+  <div class="journal">
+    Volume: <%= @journal.volume %>  Issue: <%= @journal.issue %> Pages: <%= @journal.pages %> Year: <%= @journal.year %>
+  </div>
+<%= link_to 'add new article to journal', new_article_path(id: @journal.id) %>

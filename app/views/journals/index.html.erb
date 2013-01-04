@@ -1,0 +1,30 @@
+<% provide(:title, 'Journals Index') %>
+<h1>Journals Index</h1>
+<table>
+  <thead>
+    <tr>
+      <td>Volume</td>
+      <td>Issue</td>
+      <td>Pages</td>
+      <td>Year</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </thead>
+
+  <% Journal.all.each do |journal| %>
+    <tr>
+      <td><%= journal.volume %></td>
+      <td><%= journal.issue %></td>
+      <td><%= journal.pages %></td>
+      <td><%= journal.year %></td>
+      <td><%= link_to 'Show Journal', journal %></td>
+      <td><%= link_to 'Edit Journal', edit_journal_path(journal) %></td>
+      <td><%= link_to 'Delete Journal', journal, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+    </tr>
+  <% end %>
+
+</table>
+
+<%= link_to 'Create new journal', new_journal_path %>

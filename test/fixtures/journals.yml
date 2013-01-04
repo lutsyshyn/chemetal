@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  volume: MyString
+  issue: MyString
+  pages: MyString
+  year: MyString
+
+two:
+  volume: MyString
+  issue: MyString
+  pages: MyString
+  year: MyString

@@ -1,0 +1,20 @@
+<%= form_for(@article) do |f| %>
+  <%= render 'shared/error_messages', object: f.object  %>
+
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+
+  <%= f.label :code %>
+  <%= f.text_field :code %>
+
+  <%= f.label :pages %>
+  <%= f.text_field :pages %>
+
+  <%= f.label :supplementary_materials %>
+  <%= f.text_field :supplementary_materials %>
+
+  <%= f.label :supporting_information %>
+  <%= f.text_field :supporting_information %>
+
+  <%= f.submit %>
+<% end %>

@@ -1,0 +1,17 @@
+<%= form_for(@journal) do |f| %>
+  <%= render 'shared/error_messages', object: f.object  %>
+
+  <%= f.label :issue %>
+  <%=  f.text_field :issue %>
+
+  <%= f.label :pages %>
+  <%=  f.text_field :pages %>
+
+  <%= f.label :volume %>
+  <%=  f.text_field :volume %>
+
+  <%= f.label :year %>
+  <%=  f.text_field :year %>
+
+  <%= f.submit %>
+<% end %>
