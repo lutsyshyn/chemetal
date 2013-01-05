@@ -1,9 +1,15 @@
 Chemetal::Application.routes.draw do
 
-  resources :abstracts
-  resources :articles
+
+
   resources :authors
-  resources :journals
+
+  resources :journals do
+    resources :articles do
+      resources :abstracts
+    end
+  end
+
   resources :users
 
 

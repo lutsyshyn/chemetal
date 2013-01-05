@@ -5,10 +5,4 @@
   <div class="journal">
     Volume: <%= @journal.volume %>  Issue: <%= @journal.issue %> Pages: <%= @journal.pages %> Year: <%= @journal.year %>
   </div>
-<% @journal.articles.all.each do |article| %>
-  <%= article.title %><br/>
-  <%= article.code %><br/>
-  <%= article.pages %><br/>
-<% end %>
-
-<%= link_to 'add new article to journal', new_journal_article_path(@journal) %>
+<%= link_to 'add new article to journal', new_article_path %>
