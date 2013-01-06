@@ -4,11 +4,10 @@ Chemetal::Application.routes.draw do
 
   root :to => "journals#index"
 
-  resources :authors
-
   resources :journals do
     resources :articles do
-      resources :abstracts
+      resource :abstract
+      resources :authors
     end
   end
 

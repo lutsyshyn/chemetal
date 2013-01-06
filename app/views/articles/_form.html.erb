@@ -1,4 +1,4 @@
-<%= form_for(@article, url: journal_articles_path(@journal)) do |f| %>
+<%= form_for([@journal, @article]) do |f| %>
   <%= render 'shared/error_messages', object: f.object  %>
 
   <%= f.label :title %>
@@ -15,6 +15,25 @@
 
   <%= f.label :supporting_information %>
   <%= f.text_field :supporting_information %>
+
+  <%= f.fields_for :abstract do |abstract_form| %>
+      <li>
+        <%= abstract_form.check_box :_destroy if abstract_form.object.persisted? %>
+        <%= abstract_form.label :content %>
+        <%= abstract_form.text_field :content %>
+
+        <%= abstract_form.label :keywords %>
+        <%= abstract_form.text_field :keywords %>
+
+      </li>
+  <% end %>
+
+  <%= f.fields_for :authors do |authors_form| %>
+    <li>
+      <%= authors_form.label :first_name %>
+      <%= authors_form.text_field :first_name %>
+    </li>
+  <% end %>
 
   <%= f.submit %>
 <% end %>
