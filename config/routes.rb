@@ -1,6 +1,8 @@
 Chemetal::Application.routes.draw do
 
+  devise_for :users
 
+  root :to => "journals#index"
 
   resources :authors
 
@@ -10,10 +12,6 @@ Chemetal::Application.routes.draw do
     end
   end
 
-  resources :users
-
-
-  root to: 'users#new'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
