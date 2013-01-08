@@ -1,0 +1,10 @@
+<tr>
+  <td><%= journal.volume %></td>
+  <td><%= journal.issue %></td>
+  <td><%= journal.pages %></td>
+  <td><%= journal.month %></td>
+  <td><%= journal.year %></td>
+  <td><%= link_to 'Show Journal', journal %></td>
+  <td><%= link_to 'Edit Journal', edit_journal_path(journal) %></td>
+  <td><%= link_to 'Delete Journal', journal, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+</tr>

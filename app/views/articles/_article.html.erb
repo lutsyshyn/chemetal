@@ -1,0 +1,16 @@
+<div>
+  <%= render 'shared/title', title: article.title %>
+  <%= link_to 'Edit Article', edit_journal_article_path(@journal,article) %>
+  <%= link_to 'Delete Article', journal_article_path(@journal,article), method: :delete, data: {confirm: 'Are you sure?'} %>
+  <%= render 'shared/authors', article: article %>
+
+  <div class="article_pages">
+    <%= "Pages #{article.pages}" %>
+  </div>
+  <div class="article_links">
+    <%= link_to 'Abstract', journal_article_abstract_path(@journal,article) %>
+  </div>
+</div>
+
+
+

@@ -20,7 +20,7 @@
       <li>
         <%= abstract_form.check_box :_destroy if abstract_form.object.persisted? %>
         <%= abstract_form.label :content %>
-        <%= abstract_form.text_field :content %>
+        <%= abstract_form.text_area :content %>
 
         <%= abstract_form.label :keywords %>
         <%= abstract_form.text_field :keywords %>
@@ -28,12 +28,43 @@
       </li>
   <% end %>
 
-  <%= f.fields_for :authors do |authors_form| %>
-    <li>
-      <%= authors_form.label :first_name %>
-      <%= authors_form.text_field :first_name %>
-    </li>
-  <% end %>
+
+  <table>
+    <tr>
+      <td>
+        Initials
+      </td>
+      <td>
+        First name
+      </td>
+      <td>
+        Last name
+      </td>
+      <td>
+        Delete
+      </td>
+    </tr>
+
+    <%= f.fields_for :authors do |authors_form| %>
+      <tr>
+        <td>
+          <%= authors_form.text_field :initials %>
+        </td>
+        <td>
+          <%= authors_form.text_field :first_name %>
+        </td>
+        <td>
+          <%= authors_form.text_field :last_name %>
+        </td>
+        <td>
+          <%= authors_form.check_box :_destroy if authors_form.object.persisted? %>
+        </td>
+      </tr>
+    <% end %>
+    <tr><td colspan="4">
+      <%= link_to 'Add author', journal_article_authors_path(@journal,@article), method: :post if @article.persisted? %>
+    </td></tr>
+  </table>
 
   <%= f.submit %>
 <% end %>

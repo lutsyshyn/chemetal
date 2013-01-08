@@ -1,5 +1,5 @@
 class Journal < ActiveRecord::Base
-  attr_accessible :issue, :pages, :volume, :year
+  attr_accessible :issue, :pages, :volume, :year, :month
 
-  has_many :articles
+  has_many :articles, dependent: :destroy
 end

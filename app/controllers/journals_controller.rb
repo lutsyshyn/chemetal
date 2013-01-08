@@ -16,10 +16,11 @@ class JournalsController < ApplicationController
 
   def show
     @journal = Journal.find(params[:id])
+    @articles = @journal.articles.all
   end
 
   def index
-
+    @journals = Journal.all
   end
 
   def edit

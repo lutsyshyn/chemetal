@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
   def new
     @article = @journal.articles.new
     @article.build_abstract
-    3.times { @article.authors.build }
+    5.times { @article.authors.build }
   end
 
   def edit
@@ -25,12 +25,10 @@ class ArticlesController < ApplicationController
   def create
     @article = @journal.articles.new(params[:article])
 
-    if @article.save
-      flash[:success] = 'Article created'
-      redirect_to journal_article_path(@journal, @article)
-    else
-      render 'new'
-    end
+    flash[:success] = 'Article created' if @article.save
+
+    respond_with(@journal, @article)
+
   end
   
   def show
@@ -39,6 +37,12 @@ class ArticlesController < ApplicationController
 
   def index
 
+  end
+
+  def destroy
+    Article.find(params[:id]).destroy
+    flash[:success] = 'Article deleted'
+    respond_with (@journal)
   end
 
   private
