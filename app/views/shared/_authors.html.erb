@@ -1,5 +1,11 @@
   <div class="article_authors">
+    <% authors = [] %>
     <% article.authors.all.each do |author| %>
-      <%= author.name %>
+      <% if !author.email.blank? %>
+        <% authors << mail_to(author.email, author.name) %>
+      <% else %>
+        <% authors << author.name %>
+      <% end %>
     <% end %>
+    <%= authors.join(", ").html_safe %>
   </div>

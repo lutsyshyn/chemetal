@@ -41,6 +41,9 @@
         Last name
       </td>
       <td>
+        Email
+      </td>
+      <td>
         Delete
       </td>
     </tr>
@@ -55,6 +58,9 @@
         </td>
         <td>
           <%= authors_form.text_field :last_name %>
+        </td>
+        <td>
+          <%= authors_form.text_field :email %>
         </td>
         <td>
           <%= authors_form.check_box :_destroy if authors_form.object.persisted? %>
