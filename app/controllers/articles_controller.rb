@@ -45,6 +45,10 @@ class ArticlesController < ApplicationController
     respond_with (@journal)
   end
 
+  def pdf
+    send_file Article.find(params[:id]).pdf.url
+  end
+
   private
 
   def find_journal

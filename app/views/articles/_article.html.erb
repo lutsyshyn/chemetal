@@ -9,6 +9,7 @@
   </div>
   <div class="article_links">
     <%= link_to 'Abstract', journal_article_abstract_path(@journal,article) %>
+    <%= link_to 'Full text PDF', pdf_journal_article_url(@journal,article) %>
   </div>
 </div>
 

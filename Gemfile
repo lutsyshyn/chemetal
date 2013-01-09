@@ -12,6 +12,7 @@ gem 'bcrypt-ruby', '3.0.1'
 gem 'sqlite3'
 
 gem 'devise'
+gem 'carrierwave'
 
 
 # Gems used only for assets and not required
