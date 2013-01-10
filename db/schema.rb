@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130109105209) do
+ActiveRecord::Schema.define(:version => 20130110192958) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content"
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(:version => 20130109105209) do
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
     t.string   "pdf"
+  end
+
+  create_table "attachments", :force => true do |t|
+    t.integer  "article_id"
+    t.string   "file"
+    t.string   "extension"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "authors", :force => true do |t|

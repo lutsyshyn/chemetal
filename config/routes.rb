@@ -6,9 +6,13 @@ Chemetal::Application.routes.draw do
 
   resources :journals do
     resources :articles do
-      get 'pdf', :on => :member
+      member do
+        get 'full_pdf'
+        get 'new_attachment'
+        get 'new_author'
+        get 'get_file'
+      end
       resource :abstract
-      resources :authors
     end
   end
 

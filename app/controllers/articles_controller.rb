@@ -8,6 +8,7 @@ class ArticlesController < ApplicationController
     @article = @journal.articles.new
     @article.build_abstract
     5.times { @article.authors.build }
+    3.times { @article.attachments.build }
   end
 
   def edit
@@ -45,8 +46,24 @@ class ArticlesController < ApplicationController
     respond_with (@journal)
   end
 
-  def pdf
-    send_file Article.find(params[:id]).pdf.url
+  def full_pdf
+    send_file Attachment.find_by_article_id_and_extension_and_description(params[:id], 'pdf', '').file.url
+  end
+
+  def get_file
+    send_file Attachment.find(params[:attachment_id]).file.url
+  end
+
+  def new_attachment
+    @article = Article.find(params[:id])
+    @article.attachments.build
+    render 'edit'
+  end
+
+  def new_author
+    @article = Article.find(params[:id])
+    @article.authors.build
+    render 'edit'
   end
 
   private

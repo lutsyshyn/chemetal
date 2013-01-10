@@ -10,20 +10,39 @@
   <%= f.label :pages %>
   <%= f.text_field :pages %>
 
-  <%= f.label :supplementary_materials %>
-  <%= f.text_field :supplementary_materials %>
+  <!--<%= f.label :pdf %>-->
+  <!--<%= f.file_field :pdf if @article.pdf.blank? %>-->
+  <!--<%= f.label :remove_pdf, @article.pdf if !@article.pdf.blank? %>-->
+  <!--<%= f.check_box :remove_pdf if !@article.pdf.blank? %>-->
 
-  <%= f.label :supporting_information %>
-  <%= f.text_field :supporting_information %>
+  <table>
+    <tr>
+      <td>Description</td>
+      <td>File</td>
+      <td>Delete</td>
+    </tr>
+    <%= f.fields_for :attachments do |attachment_form| %>
+      <tr>
+        <td>
+          <%= attachment_form.text_field :description %>
+        </td>
+        <td>
+          <%= attachment_form.file_field :file if !attachment_form.object.persisted? %>
+          <%= attachment_form.label :file, attachment_form.object.filename if attachment_form.object.persisted? %>
+        </td>
+        <td>
+          <%= attachment_form.check_box :_destroy if attachment_form.object.persisted? %>
+        </td>
+      </tr>
+    <% end %>
+    <tr><td colspan="3">
+      <%= link_to 'Add attachment', new_attachment_journal_article_path if @article.persisted? %>
+    </td></tr>
+  </table>
 
-  <%= f.label :pdf %>
-  <%= f.file_field :pdf if @article.pdf.blank? %>
-  <%= f.label :remove_pdf, @article.pdf if !@article.pdf.blank? %>
-  <%= f.check_box :remove_pdf if !@article.pdf.blank? %>
 
   <%= f.fields_for :abstract do |abstract_form| %>
       <li>
-        <%= abstract_form.check_box :_destroy if abstract_form.object.persisted? %>
         <%= abstract_form.label :content %>
         <%= abstract_form.text_area :content %>
 
@@ -73,7 +92,7 @@
       </tr>
     <% end %>
     <tr><td colspan="4">
-      <%= link_to 'Add author', journal_article_authors_path(@journal,@article), method: :post if @article.persisted? %>
+      <%= link_to 'Add author', new_author_journal_article_path if @article.persisted? %>
     </td></tr>
   </table>
 
