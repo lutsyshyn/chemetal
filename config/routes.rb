@@ -16,6 +16,12 @@ Chemetal::Application.routes.draw do
     end
   end
 
+  match '/home', to: 'static_pages#home'
+  match '/about', to: 'static_pages#about'
+  match '/guidelines', to: 'static_pages#guidelines'
+  match '/papers', to: 'static_pages#papers'
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

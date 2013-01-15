@@ -8,4 +8,9 @@ module ApplicationHelper
       "#{base_title} - #{page_title}"
     end
   end
+
+  def all_journals
+    Journal.all
+  end
+
 end

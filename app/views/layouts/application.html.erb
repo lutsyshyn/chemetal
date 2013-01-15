@@ -18,12 +18,19 @@
         <%= link_to "Sign in", new_user_session_path %>
     <% end %>
   </div>
-  <div class='container'>
+  <div class='container-fluid'>
     <% flash.each do |key,value| %>
       <%= content_tag(:div,value, class: "alert alert-#{key}") %>
     <% end %>
+    <div class="row-fluid">
+      <div class="span2">
+        <%= render 'shared/menu', journals: all_journals %>
+      </div>
+      <div class="span10">
+        <%= yield %>
+      </div>
+    </div>
 
-    <%= yield %>
 
     <%= render 'layouts/footer' %>
     <%= debug(params) if Rails.env.development? %>
