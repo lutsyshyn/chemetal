@@ -22,7 +22,6 @@ Chemetal::Application.routes.draw do
   match '/papers', to: 'static_pages#papers'
 
 
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

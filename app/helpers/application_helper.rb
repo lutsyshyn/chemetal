@@ -13,4 +13,5 @@ module ApplicationHelper
     Journal.all
   end
 
+
 end

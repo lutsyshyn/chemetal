@@ -1,7 +1,12 @@
 <% provide(:title, "Volume #{@journal.volume}, Issue #{@journal.issue}, #{@journal.month} #{@journal.year}") %>
-<%= link_to 'Back to journals index', journals_path %>
+
 <h1><%= "Volume #{@journal.volume}, Issue #{@journal.issue}, #{@journal.month} #{@journal.year}" %></h1>
+
+<% if user_signed_in? %>
+  <%= link_to 'Add new article to journal', new_journal_article_path(@journal) %><br/><br/>
+<% end %>
+
 
 <%= render @articles %>
 
-<%= link_to 'add new article to journal', new_journal_article_path(@journal) %>
+

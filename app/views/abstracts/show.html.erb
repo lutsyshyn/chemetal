@@ -1,9 +1,9 @@
-<%= link_to 'Back to Journal', journal_path(params[:journal_id]) %>
+<%= link_to 'Back to Journal', journal_path(@journal) %><br/>
 
 
-<%= render 'shared/title', title: Article.find(params[:article_id]).title %>
+<%= render 'shared/title', title: @article.title %>
 
-<%= render 'shared/authors', article: Article.find(params[:article_id]) %>
+<%= render 'shared/authors', article: @article %>
 
 <div class="abstract_content">
   <%= @abstarct.content.html_safe %>
@@ -14,4 +14,4 @@
   <%= @abstarct.keywords %>
 </div>
 
-<%= link_to 'Back to Journal', journal_path(params[:journal_id]) %>
+<%= link_to 'Back to Journal', journal_path(@journal) %>
