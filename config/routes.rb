@@ -11,10 +11,13 @@ Chemetal::Application.routes.draw do
         get 'new_attachment'
         get 'new_author'
         get 'get_file'
+        match 'images/:filename', to: 'articles#images'
       end
       resource :abstract
     end
   end
+
+
 
   match '/home', to: 'static_pages#home'
   match '/about', to: 'static_pages#about'

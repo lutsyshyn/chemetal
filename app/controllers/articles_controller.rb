@@ -66,6 +66,10 @@ class ArticlesController < ApplicationController
     render 'edit'
   end
 
+  def images
+    send_file Attachment.find_by_article_id_and_filename_and_extension(params[:id], params[:filename], params[:format]).file.url
+  end
+
   private
 
   def find_journal

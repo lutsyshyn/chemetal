@@ -28,7 +28,7 @@
         </td>
         <td>
           <%= attachment_form.file_field :file if !attachment_form.object.persisted? %>
-          <%= attachment_form.label :file, attachment_form.object.filename if attachment_form.object.persisted? %>
+          <%= attachment_form.label :file, attachment_form.object.file_name_ext if attachment_form.object.persisted? %>
         </td>
         <td>
           <%= attachment_form.check_box :_destroy if attachment_form.object.persisted? %>
