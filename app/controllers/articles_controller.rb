@@ -67,7 +67,8 @@ class ArticlesController < ApplicationController
   end
 
   def images
-    send_file Attachment.find_by_article_id_and_filename_and_extension(params[:id], params[:filename], params[:format]).file.url
+    send_file Attachment.find_by_article_id_and_filename_and_extension(params[:id], params[:filename], params[:format]).file.url,
+              :type => 'image/jpeg', :disposition => 'inline'
   end
 
   private
