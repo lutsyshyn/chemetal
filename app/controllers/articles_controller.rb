@@ -13,6 +13,7 @@ class ArticlesController < ApplicationController
 
   def edit
     @article = Article.find(params[:id])
+    @article.attachments.build
   end
 
   def update
@@ -25,11 +26,8 @@ class ArticlesController < ApplicationController
 
   def create
     @article = @journal.articles.new(params[:article])
-
     flash[:success] = 'Article created' if @article.save
-
     respond_with(@journal, @article)
-
   end
   
   def show
@@ -52,18 +50,6 @@ class ArticlesController < ApplicationController
 
   def get_file
     send_file Attachment.find(params[:attachment_id]).file.url
-  end
-
-  def new_attachment
-    @article = Article.find(params[:id])
-    @article.attachments.build
-    render 'edit'
-  end
-
-  def new_author
-    @article = Article.find(params[:id])
-    @article.authors.build
-    render 'edit'
   end
 
   def images

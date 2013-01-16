@@ -13,6 +13,7 @@ gem 'sqlite3'
 
 gem 'devise'
 gem 'carrierwave'
+gem 'nested_form'
 
 
 # Gems used only for assets and not required

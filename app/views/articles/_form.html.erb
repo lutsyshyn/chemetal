@@ -1,100 +1,60 @@
-<%= form_for([@journal, @article]) do |f| %>
+<%= nested_form_for [@journal, @article], html: {class: "form-inline"} do |f| %>
   <%= render 'shared/error_messages', object: f.object  %>
 
-  <%= f.label :title %>
-  <%= f.text_field :title %>
+  <div class="controls-row">
+    <%= f.label :title, class: "span1" %>
+    <%= f.text_field :title, class: "span4" %>
+  </div>
 
-  <%= f.label :code %>
-  <%= f.text_field :code %>
+  <div class="controls-row">
+    <%= f.label :code, class: "span1" %>
+    <%= f.text_field :code, class: "span4" %>
+  </div>
 
-  <%= f.label :pages %>
-  <%= f.text_field :pages %>
+  <div class="controls-row">
+    <%= f.label :pages, class: "span1" %>
+    <%= f.text_field :pages, class: "span4" %>
+  </div>
 
-  <!--<%= f.label :pdf %>-->
-  <!--<%= f.file_field :pdf if @article.pdf.blank? %>-->
-  <!--<%= f.label :remove_pdf, @article.pdf if !@article.pdf.blank? %>-->
-  <!--<%= f.check_box :remove_pdf if !@article.pdf.blank? %>-->
+  <h5>Files attached to article</h5>
+  <%= f.fields_for :attachments do |attachment_form| %>
+    <div class="controls-row">
+      <%= attachment_form.label :description, class: "span1" %>
+      <%= attachment_form.text_field :description, class: "span4"  if !attachment_form.object.persisted? %>
+      <%= attachment_form.file_field :file, class: "span4" if !attachment_form.object.persisted? %>
+      <%= attachment_form.label :file, attachment_form.object.file_name_ext, class: "span4" if attachment_form.object.persisted? %>
+      <%= attachment_form.link_to_remove "Remove" %>
+    </div>
+  <% end %>
+  <p><%= f.link_to_add "Add an attachment", :attachments %></p>
 
-  <table>
-    <tr>
-      <td>Description</td>
-      <td>File</td>
-      <td>Delete</td>
-    </tr>
-    <%= f.fields_for :attachments do |attachment_form| %>
-      <tr>
-        <td>
-          <%= attachment_form.text_field :description %>
-        </td>
-        <td>
-          <%= attachment_form.file_field :file if !attachment_form.object.persisted? %>
-          <%= attachment_form.label :file, attachment_form.object.file_name_ext if attachment_form.object.persisted? %>
-        </td>
-        <td>
-          <%= attachment_form.check_box :_destroy if attachment_form.object.persisted? %>
-        </td>
-      </tr>
-    <% end %>
-    <tr><td colspan="3">
-      <%= link_to 'Add attachment', new_attachment_journal_article_path if @article.persisted? %>
-    </td></tr>
-  </table>
-
-
+  <h5>Abstract</h5>
   <%= f.fields_for :abstract do |abstract_form| %>
-      <li>
-        <%= abstract_form.label :content %>
-        <%= abstract_form.text_area :content %>
-
-        <%= abstract_form.label :keywords %>
-        <%= abstract_form.text_field :keywords %>
-
-      </li>
+    <%= abstract_form.text_area :content, rows: "5", class: "span10" %><br/><br/>
+    <div class="controls-row">
+      <%= abstract_form.label :keywords, class: "span1" %>
+      <%= abstract_form.text_field :keywords, class: "span9" %>
+    </div>
   <% end %>
 
+  <h5>Authors</h5>
+  <%= f.fields_for :authors do |authors_form| %>
+    <div class="controls-row">
+      <%= authors_form.label :initials %>
+      <%= authors_form.text_field :initials, class: "span1" %>
+      <%= authors_form.label :first_name %>
+      <%= authors_form.text_field :first_name, class: "span2"  %>
+      <%= authors_form.label :last_name %>
+      <%= authors_form.text_field :last_name, class: "span2"  %>
+      <%= authors_form.label :email %>
+      <%= authors_form.text_field :email, class: "span3"  %>
+      <%= authors_form.link_to_remove "Remove" %>
+    </div>
 
-  <table>
-    <tr>
-      <td>
-        Initials
-      </td>
-      <td>
-        First name
-      </td>
-      <td>
-        Last name
-      </td>
-      <td>
-        Email
-      </td>
-      <td>
-        Delete
-      </td>
-    </tr>
 
-    <%= f.fields_for :authors do |authors_form| %>
-      <tr>
-        <td>
-          <%= authors_form.text_field :initials %>
-        </td>
-        <td>
-          <%= authors_form.text_field :first_name %>
-        </td>
-        <td>
-          <%= authors_form.text_field :last_name %>
-        </td>
-        <td>
-          <%= authors_form.text_field :email %>
-        </td>
-        <td>
-          <%= authors_form.check_box :_destroy if authors_form.object.persisted? %>
-        </td>
-      </tr>
-    <% end %>
-    <tr><td colspan="4">
-      <%= link_to 'Add author', new_author_journal_article_path if @article.persisted? %>
-    </td></tr>
-  </table>
+  <% end %>
+  <p><%= f.link_to_add "Add an author", :authors %></p>
+
 
   <%= f.submit %>
 <% end %>
