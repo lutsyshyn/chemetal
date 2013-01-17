@@ -11,10 +11,7 @@
   </div>
   <div class="article_links">
     <%= link_to 'Abstract', journal_article_abstract_path(@journal,article) %> |
-    <%= link_to 'Full text PDF', full_pdf_journal_article_url(@journal,article) %>
-    <% article.attachments.where('description !=   ""').each do |attachment| %>
-       | <%= link_to attachment.description, get_file_journal_article_url(@journal,article,attachment_id: attachment.id) %>
-    <% end %>
+    <%= render "articles/attachments", :journal => @journal, :article => article %>
   </div>
 </div>
 

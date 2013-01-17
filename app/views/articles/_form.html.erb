@@ -1,4 +1,4 @@
-<%= nested_form_for [@journal, @article], html: {class: "form-inline"} do |f| %>
+<%= nested_form_for [@journal, @article], html: {class: "form-inline", multipart: true } do |f| %>
   <%= render 'shared/error_messages', object: f.object  %>
 
   <div class="controls-row">
@@ -20,9 +20,9 @@
   <%= f.fields_for :attachments do |attachment_form| %>
     <div class="controls-row">
       <%= attachment_form.label :description, class: "span1" %>
-      <%= attachment_form.text_field :description, class: "span4"  if !attachment_form.object.persisted? %>
+      <%= attachment_form.text_field :description, class: "span4" %>
+      <%= attachment_form.text_field :file, class: "span4", disabled: true if attachment_form.object.persisted? %>
       <%= attachment_form.file_field :file, class: "span4" if !attachment_form.object.persisted? %>
-      <%= attachment_form.label :file, attachment_form.object.file_name_ext, class: "span4" if attachment_form.object.persisted? %>
       <%= attachment_form.link_to_remove "Remove" %>
     </div>
   <% end %>

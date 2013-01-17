@@ -13,7 +13,6 @@ class ArticlesController < ApplicationController
 
   def edit
     @article = Article.find(params[:id])
-    @article.attachments.build
   end
 
   def update
@@ -32,6 +31,7 @@ class ArticlesController < ApplicationController
   
   def show
     @article = Article.find(params[:id])
+    @attachments = @article.attachments.all
   end
 
   def index
@@ -62,4 +62,5 @@ class ArticlesController < ApplicationController
   def find_journal
     @journal = Journal.find(params[:journal_id])
   end
+
 end
