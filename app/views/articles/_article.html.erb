@@ -1,8 +1,8 @@
 <div>
   <%= render 'shared/title', title: article.title %>
   <% if user_signed_in? %>
-    <%= link_to 'Edit', edit_journal_article_path(@journal,article) %>
-    <%= link_to 'Delete', journal_article_path(@journal,article), method: :delete, data: {confirm: 'Are you sure?'} %>
+    <%= link_to 'Edit', edit_article_path(article) %>
+    <%= link_to 'Delete', article_path(article), method: :delete, data: {confirm: 'Are you sure?'} %>
   <% end %>
   <%= render 'shared/authors', article: article %>
 
@@ -10,8 +10,8 @@
     <%= "Pages #{article.pages}" %>
   </div>
   <div class="article_links">
-    <%= link_to 'Abstract', journal_article_abstract_path(@journal,article) %> |
-    <%= render "articles/attachments", :journal => @journal, :article => article %>
+    <%= link_to 'Abstract', article_abstract_path(article) %> |
+    <%= render "articles/attachments", :article => article %>
   </div>
 </div>
 

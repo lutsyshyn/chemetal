@@ -1,4 +1,4 @@
-<%= link_to 'Back to Journal', journal_path(@journal) %><br/>
+<%= link_to 'Back to Journal', journal_path(@article.journal) %><br/>
 
 
 <%= render 'shared/title', title: @article.title %>
@@ -6,12 +6,11 @@
 <%= render 'shared/authors', article: @article %>
 
 <div class="abstract_content">
-  <%= @abstarct.content.html_safe %>
+  <%= @abstract.content.html_safe %>
 </div>
 
 <div class="abstract_keywords">
   Keywords:<br/>
-  <%= @abstarct.keywords %>
+  <%= @abstract.keywords %>
 </div>
 
-<%= link_to 'Back to Journal', journal_path(@journal) %>

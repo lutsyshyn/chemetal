@@ -4,22 +4,21 @@ Chemetal::Application.routes.draw do
 
   root :to => "journals#index"
 
-  resources :journals do
+  resources :journals, shallow: true do
     resources :articles do
       member do
-        get 'full_pdf'
-        get 'new_attachment'
-        get 'new_author'
-        get 'get_file'
         match 'images/:filename', to: 'articles#images'
+        get 'full_pdf'
+        get 'get_file'
       end
       resource :abstract
     end
   end
 
 
+
   match '/sign', to: 'static_pages#sign_in'
-  #match '/sign_in', to: 'static_pages#sign_in'
+
 
   match '/home', to: 'static_pages#home'
   match '/about', to: 'static_pages#about'

@@ -11,4 +11,10 @@ class Article < ActiveRecord::Base
   accepts_nested_attributes_for :authors, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: :all_blank
 
+  def optional_attachments
+    attachments.where('description !=   ""')
+  end
+
+
+
 end

@@ -2,9 +2,8 @@ class ArticlesController < ApplicationController
 
   respond_to :html
 
-  before_filter :find_journal
-
   def new
+    @journal = Journal.find(params[:journal_id])
     @article = @journal.articles.new
     @article.build_abstract
     5.times { @article.authors.build }
@@ -20,18 +19,19 @@ class ArticlesController < ApplicationController
 
     flash[:success] = 'Article created' if @article.update_attributes(params[:article])
 
-    respond_with(@journal, @article)
+    respond_with(@article)
   end
 
   def create
+    @journal = Journal.find(params[:journal_id])
     @article = @journal.articles.new(params[:article])
     flash[:success] = 'Article created' if @article.save
-    respond_with(@journal, @article)
+    respond_with(@article)
   end
   
   def show
     @article = Article.find(params[:id])
-    @attachments = @article.attachments.all
+    redirect_to article_abstract_path(@article)
   end
 
   def index
@@ -39,10 +39,13 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    Article.find(params[:id]).destroy
+    @article = Article.find(params[:id])
+    @journal = @article.journal
+    @article.destroy
     flash[:success] = 'Article deleted'
     respond_with (@journal)
   end
+
 
   def full_pdf
     send_file Attachment.find_by_article_id_and_extension_and_description(params[:id], 'pdf', '').file.url
@@ -59,8 +62,5 @@ class ArticlesController < ApplicationController
 
   private
 
-  def find_journal
-    @journal = Journal.find(params[:journal_id])
-  end
 
 end

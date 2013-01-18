@@ -13,6 +13,7 @@ class Attachment < ActiveRecord::Base
     file.url.split("/").last if !file.blank?
   end
 
+
   def show
 
   end

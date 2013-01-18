@@ -1,9 +1,0 @@
-<% provide(:title, 'Article') %>
-
-<%= link_to 'Back to Journal', journal_path(@journal) %>
-
-<h1><%= @article.title  %></h1>
-
-<h3><%= @article.abstract.content if @article.abstract %></h3>
-
-<%= link_to 'Back to Journal', journal_path(@journal) %>
