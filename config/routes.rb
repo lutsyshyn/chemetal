@@ -18,6 +18,8 @@ Chemetal::Application.routes.draw do
   end
 
 
+  match '/sign', to: 'static_pages#sign_in'
+  #match '/sign_in', to: 'static_pages#sign_in'
 
   match '/home', to: 'static_pages#home'
   match '/about', to: 'static_pages#about'
