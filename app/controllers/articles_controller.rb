@@ -8,6 +8,7 @@ class ArticlesController < ApplicationController
     @article.build_abstract
     5.times { @article.authors.build }
     3.times { @article.attachments.build }
+    authorize! :create, @article
   end
 
   def edit
@@ -27,6 +28,7 @@ class ArticlesController < ApplicationController
     @article = @journal.articles.new(params[:article])
     flash[:success] = 'Article created' if @article.save
     respond_with(@article)
+    authorize! :create, @article
   end
   
   def show
