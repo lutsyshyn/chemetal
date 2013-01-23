@@ -1,6 +1,6 @@
 <%= nested_form_for [@journal, @article], html: {class: "form-inline", multipart: true } do |f| %>
   <%= render 'shared/error_messages', object: f.object  %>
-
+  <%= hidden_field_tag "user_id", current_user.id %>
   <div class="controls-row">
     <%= f.label :title, class: "span1" %>
     <%= f.text_field :title, class: "span4" %>

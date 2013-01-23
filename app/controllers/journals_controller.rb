@@ -1,11 +1,12 @@
 class JournalsController < ApplicationController
+  load_and_authorize_resource
 
   def new
-    @journal = Journal.new
+    #@journal = Journal.new
   end
 
   def create
-    @journal =  Journal.new(params[:journal])
+    #@journal =  Journal.new(params[:journal])
     if @journal.save
       flash[:success] = 'Journal created successfully'
       redirect_to @journal
@@ -15,20 +16,20 @@ class JournalsController < ApplicationController
   end
 
   def show
-    @journal = Journal.find(params[:id])
+    #@journal = Journal.find(params[:id])
     @articles = @journal.articles.all
   end
 
   def index
-    @journals = Journal.all
+    #@journals = Journal.all
   end
 
   def edit
-    @journal = Journal.find(params[:id])
+    #@journal = Journal.find(params[:id])
   end
 
   def update
-    @journal =  Journal.find(params[:id])
+    #@journal =  Journal.find(params[:id])
     if @journal.update_attributes(params[:journal])
       flash[:success] = 'Journal edited successfully'
       redirect_to @journal

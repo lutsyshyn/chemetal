@@ -1,0 +1,9 @@
+<table>
+  <% @users.each do |u| %>
+    <tr>
+      <td><%= link_to "#{u.email}", edit_user_path(u.id)  %></td>
+      <td><%= "Roles #{u.roles.collect{|r| r.name}}" %></td>
+      <td><%= link_to "delete", u, :confirm => "Are you sure?", :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>

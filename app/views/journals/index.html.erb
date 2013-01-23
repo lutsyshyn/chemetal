@@ -18,4 +18,4 @@
 
 </table>
 
-<%= link_to 'Create new journal', new_journal_path %>
+<%= link_to_if(can?(:manage, Journal), 'Create new journal', new_journal_path) {} %>

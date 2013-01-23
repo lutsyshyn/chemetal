@@ -1,6 +1,6 @@
 class Article < ActiveRecord::Base
   attr_accessible :code, :journal_id, :pages, :supplementary_materials, :supporting_information,
-                  :title, :abstract_attributes, :authors_attributes, :attachments_attributes
+                  :title, :abstract_attributes, :authors_attributes, :attachments_attributes, :user_id
 
   has_one :abstract, dependent: :destroy
   has_many :authors, dependent: :destroy

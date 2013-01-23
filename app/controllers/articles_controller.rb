@@ -28,7 +28,7 @@ class ArticlesController < ApplicationController
     @article = @journal.articles.new(params[:article])
     flash[:success] = 'Article created' if @article.save
     respond_with(@article)
-    authorize! :create, @article
+
   end
   
   def show
