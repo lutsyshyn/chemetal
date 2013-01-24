@@ -44,4 +44,5 @@ class JournalsController < ApplicationController
     redirect_to journals_url
   end
 
+
 end

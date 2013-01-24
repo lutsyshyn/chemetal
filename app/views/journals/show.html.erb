@@ -2,10 +2,7 @@
 
 <h1><%= "Volume #{@journal.volume}, Issue #{@journal.issue}, #{@journal.month} #{@journal.year}" %></h1>
 
-<% if user_signed_in? %>
-  <%= link_to 'Add new article to journal', new_journal_article_path(@journal) %><br/><br/>
-<% end %>
-
+<%= link_to_if(can?(:create, Article), 'Add new article to journal', new_journal_article_path(@journal)) {} %><br/><br/>
 
 <%= render @articles %>
 

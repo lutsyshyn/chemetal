@@ -1,20 +1,23 @@
-<%= form_for(@journal) do |f| %>
+<%= form_for @journal do |f| %>
   <%= render 'shared/error_messages', object: f.object  %>
 
   <%= f.label :volume %>
-  <%=  f.text_field :volume %>
+  <%= f.text_field :volume %>
 
   <%= f.label :issue %>
-  <%=  f.text_field :issue %>
+  <%= f.text_field :issue %>
 
   <%= f.label :pages %>
-  <%=  f.text_field :pages %>
+  <%= f.text_field :pages %>
 
   <%= f.label :month %>
-  <%=  f.text_field :month %>
+  <%= f.text_field :month %>
 
   <%= f.label :year %>
-  <%=  f.text_field :year %>
+  <%= f.text_field :year %>
+
+  <%= f.label :published %>
+  <%= f.check_box :published %> <br/>
 
   <%= f.submit %>
 <% end %>

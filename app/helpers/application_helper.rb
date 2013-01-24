@@ -9,9 +9,7 @@ module ApplicationHelper
     end
   end
 
-  def all_journals
-    Journal.all
-  end
+
 
 
 end

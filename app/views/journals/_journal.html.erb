@@ -4,7 +4,9 @@
   <td><%= journal.pages %></td>
   <td><%= journal.month %></td>
   <td><%= journal.year %></td>
-  <td><%= link_to 'Show Journal', journal %></td>
-  <td><%= link_to_if(can?(:manage, Journal), 'Edit Journal', edit_journal_path(journal)) {} %></td>
-  <td><%= link_to_if(can?(:manage, Journal), 'Delete Journal', journal, method: :delete, data: {confirm: 'Are you sure?'}) {} %></td>
+  <td><%= journal.published? ? 'yes' : 'no' %></td>
+  <td><%= link_to 'Show', journal %></td>
+  <td><%= link_to_if(can?(:manage, journal), 'Edit', edit_journal_path(journal)) {} %></td>
+  <td><%= link_to_if(can?(:manage, journal), 'Delete', journal, method: :delete,
+                     data: {confirm: 'Are you sure?'}) {} %></td>
 </tr>

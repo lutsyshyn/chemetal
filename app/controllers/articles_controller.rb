@@ -1,10 +1,13 @@
 class ArticlesController < ApplicationController
 
+  load_and_authorize_resource :journal
+  load_and_authorize_resource :article, :through => :journal, shallow: true, except: [:full_pdf, :get_file, :images]
+
   respond_to :html
 
   def new
-    @journal = Journal.find(params[:journal_id])
-    @article = @journal.articles.new
+    #@journal = Journal.find(params[:journal_id])
+    #@article = @journal.articles.new
     @article.build_abstract
     5.times { @article.authors.build }
     3.times { @article.attachments.build }
@@ -12,11 +15,11 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    @article = Article.find(params[:id])
+    #@article = Article.find(params[:id])
   end
 
   def update
-    @article = Article.find(params[:id])
+    #@article = Article.find(params[:id])
 
     flash[:success] = 'Article created' if @article.update_attributes(params[:article])
 
@@ -24,15 +27,14 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @journal = Journal.find(params[:journal_id])
-    @article = @journal.articles.new(params[:article])
+    #@journal = Journal.find(params[:journal_id])
+    #@article = @journal.articles.new(params[:article])
     flash[:success] = 'Article created' if @article.save
     respond_with(@article)
-
   end
   
   def show
-    @article = Article.find(params[:id])
+    #@article = Article.find(params[:id])
     redirect_to article_abstract_path(@article)
   end
 
@@ -41,13 +43,17 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
-    @journal = @article.journal
+    #@article = Article.find(params[:id])
+    #@journal = @article.journal
     @article.destroy
     flash[:success] = 'Article deleted'
     respond_with (@journal)
   end
 
+  def in_preparation
+    @journals = Journal.unpublished
+
+  end
 
   def full_pdf
     send_file Attachment.find_by_article_id_and_extension_and_description(params[:id], 'pdf', '').file.url
