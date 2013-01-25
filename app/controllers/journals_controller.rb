@@ -17,7 +17,12 @@ class JournalsController < ApplicationController
 
   def show
     #@journal = Journal.find(params[:id])
-    @articles = @journal.articles.all
+    if (current_user && current_user.has_role?(:admin)) || !@journal.published
+      @articles = @journal.articles.all
+    else
+      @articles = @journal.articles.proofed
+    end
+
   end
 
   def index

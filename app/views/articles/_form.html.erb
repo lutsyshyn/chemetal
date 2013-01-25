@@ -3,8 +3,7 @@
 
   <div class="controls-row">
     <%= f.label :journal_id, class: "span1" %>
-    <%= f.select :journal_id, Journal.all.map { |journal| [journal.year, journal.id]} %>
-    <!--<%= collection_select(:article, :journal_id, Journal.all, :id, :year, prompt: true) %>-->
+    <%= f.select :journal_id, @journals_select %>
   </div>
 
   <div class="controls-row">
@@ -12,27 +11,29 @@
     <%= f.text_field :title, class: "span4" %>
   </div>
 
-  <div class="controls-row">
-    <%= f.label :code, class: "span1" %>
-    <%= f.text_field :code, class: "span4" %>
-  </div>
+  <% if can?(:manage, Journal) %>
+    <div class="controls-row">
+      <%= f.label :code, class: "span1" %>
+      <%= f.text_field :code, class: "span4" %>
+    </div>
 
-  <div class="controls-row">
-    <%= f.label :pages, class: "span1" %>
-    <%= f.text_field :pages, class: "span4" %>
-  </div>
+    <div class="controls-row">
+      <%= f.label :pages, class: "span1" %>
+      <%= f.text_field :pages, class: "span4" %>
+    </div>
+  <% end %>
 
   <h5>Files attached to article</h5>
   <%= f.fields_for :attachments do |attachment_form| %>
     <div class="controls-row">
       <%= attachment_form.label :description, class: "span1" %>
-      <%= attachment_form.text_field :description, class: "span4" %>
-      <%= attachment_form.text_field :file, class: "span4", disabled: true if attachment_form.object.persisted? %>
-      <%= attachment_form.file_field :file, class: "span4" if !attachment_form.object.persisted? %>
-      <%= attachment_form.link_to_remove "Remove" %>
+      <%= attachment_form.text_field :description, class: "span2" %>
+      <%= attachment_form.text_field :file, class: "span6", disabled: true if attachment_form.object.persisted? %>
+      <%= attachment_form.file_field :file, class: "span6" if !attachment_form.object.persisted? %>
+      <%= attachment_form.link_to_remove "Remove", class: "span1" %>
     </div>
   <% end %>
-  <p><%= f.link_to_add "Add an attachment", :attachments %></p>
+  <p><%= f.link_to_add "Attach another file", :attachments %></p>
 
   <h5>Abstract</h5>
   <%= f.fields_for :abstract do |abstract_form| %>
@@ -46,21 +47,27 @@
   <h5>Authors</h5>
   <%= f.fields_for :authors do |authors_form| %>
     <div class="controls-row">
-      <%= authors_form.label :initials %>
+      <%= authors_form.label :initials, class: "span1" %>
       <%= authors_form.text_field :initials, class: "span1" %>
-      <%= authors_form.label :first_name %>
+      <%= authors_form.label :first_name, class: "span1" %>
       <%= authors_form.text_field :first_name, class: "span2"  %>
-      <%= authors_form.label :last_name %>
+      <%= authors_form.label :last_name, class: "span1" %>
       <%= authors_form.text_field :last_name, class: "span2"  %>
-      <%= authors_form.label :email %>
-      <%= authors_form.text_field :email, class: "span3"  %>
-      <%= authors_form.link_to_remove "Remove" %>
+      <%= authors_form.label :email, class: "span1" %>
+      <%= authors_form.text_field :email, class: "span2" %>
+      <%= authors_form.link_to_remove "Remove", class: "span1"  %>
     </div>
 
 
   <% end %>
-  <p><%= f.link_to_add "Add an author", :authors %></p>
+  <p><%= f.link_to_add "Add another author", :authors %></p>
 
+  <% if can?(:manage, Journal) %>
+    <div class="controls-row">
+      <%= f.label :proofed %>
+      <%= f.check_box :proofed %>
+    </div>
+  <% end %>
 
   <%= f.submit %>
 <% end %>

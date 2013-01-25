@@ -16,4 +16,8 @@ class Article < ActiveRecord::Base
     attachments.where('description !=   ""')
   end
 
+  def self.proofed
+    Article.where(proofed: true)
+  end
+
 end

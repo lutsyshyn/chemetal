@@ -4,6 +4,7 @@
     <li><%= link_to 'About the journal', about_path %></li>
     <li><%= link_to 'Guidelines for authors', guidelines_path %></li>
     <li><%= link_to 'Papers in preparation', papers_path %></li>
+    <li><%= link_to_if(can?(:create, Article), 'Submit an Article', submit_path) {} %></li>
     <li><%= link_to_if(can?(:manage, Journal), 'Journals index', journals_path) {} %></li>
     <% Journal.published.each do |journal| %>
       <li>&#9658;

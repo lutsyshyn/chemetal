@@ -1,21 +1,33 @@
 class ArticlesController < ApplicationController
 
   load_and_authorize_resource :journal
-  load_and_authorize_resource :article, :through => :journal, shallow: true, except: [:full_pdf, :get_file, :images]
+  load_and_authorize_resource :article, :through => :journal, shallow: true,
+                              except: [:full_pdf, :get_file, :images, :in_preparation]
 
   respond_to :html
 
   def new
     #@journal = Journal.find(params[:journal_id])
     #@article = @journal.articles.new
+
+    unless @journal
+      @journal = Journal.unpublished.last
+      @article = @journal.articles.new
+    end
+
+    @journals_select = Journal.unpublished.map { |journal| [journal.year, journal.id]}
     @article.build_abstract
     5.times { @article.authors.build }
     3.times { @article.attachments.build }
-    authorize! :create, @article
   end
 
   def edit
     #@article = Article.find(params[:id])
+    if current_user.has_role?(:admin)
+      @journals_select = Journal.all.map { |journal| [journal.year, journal.id]}
+    else
+      @journals_select = Journal.unpublished.map { |journal| [journal.year, journal.id]}
+    end
   end
 
   def update

@@ -25,6 +25,7 @@ Chemetal::Application.routes.draw do
   match '/about', to: 'static_pages#about'
   match '/guidelines', to: 'static_pages#guidelines'
   match '/papers', to: 'articles#in_preparation'
+  match '/submit', to: 'articles#new'
 
 
   # The priority is based upon order of creation:
