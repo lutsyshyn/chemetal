@@ -20,15 +20,14 @@ class ArticlesController < ApplicationController
 
   def update
     #@article = Article.find(params[:id])
-
     flash[:success] = 'Article created' if @article.update_attributes(params[:article])
-
     respond_with(@article)
   end
 
   def create
     #@journal = Journal.find(params[:journal_id])
     #@article = @journal.articles.new(params[:article])
+    @article.user_id = current_user.id
     flash[:success] = 'Article created' if @article.save
     respond_with(@article)
   end
@@ -39,7 +38,6 @@ class ArticlesController < ApplicationController
   end
 
   def index
-
   end
 
   def destroy
@@ -52,7 +50,6 @@ class ArticlesController < ApplicationController
 
   def in_preparation
     @journals = Journal.unpublished
-
   end
 
   def full_pdf
@@ -67,8 +64,5 @@ class ArticlesController < ApplicationController
     send_file Attachment.find_by_article_id_and_filename_and_extension(params[:id], params[:filename], params[:format]).file.url,
               :type => 'image/jpeg', :disposition => 'inline'
   end
-
-  private
-
 
 end

@@ -9,16 +9,8 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy!
-
-    respond_to do |format|
-      format.json { respond_to_destroy(:ajax) }
-      format.xml  { head :ok }
-      format.html { respond_to_destroy(:html) }
-    end
-
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:json, :xml, :html)
+    User.find(params[:id]).destroy
+    redirect_to users_path
   end
 
   def update

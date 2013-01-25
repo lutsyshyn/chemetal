@@ -2,7 +2,8 @@
 
 <h1><%= "Volume #{@journal.volume}, Issue #{@journal.issue}, #{@journal.month} #{@journal.year}" %></h1>
 
-<%= link_to_if(can?(:create, Article), 'Add new article to journal', new_journal_article_path(@journal)) {} %><br/><br/>
+<%= link_to_if(can?(:create, Article), 'Add new article to journal',
+               new_journal_article_path(@journal)) {} unless @journal.published %>
 
 <%= render @articles %>
 

@@ -1,7 +1,9 @@
 <% provide(:title, 'Papers in preparation') %>
 <h1>Papers in preparation</h1>
+
 <% @journals.each do |journal| %>
   <h3><%= "Volume #{journal.volume}, Issue #{journal.issue}, #{journal.month} #{journal.year}" %></h3>
+  <%= link_to_if(can?(:create, Article), 'Add new article to journal',
+                 new_journal_article_path(journal)) {} %><br/><br/>
   <%= render journal.articles %>
-  <%= link_to_if(can?(:create, Article), 'Add new article to journal', new_journal_article_path(journal)) {} %><br/><br/>
 <% end %>
