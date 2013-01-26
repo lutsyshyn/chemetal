@@ -10,6 +10,5 @@ Role.create(name:"admin")
 Role.create(name:"author")
 User.create(email:"salo@salo.com", password:"password", password_confirmation:"password")
 User.create(email:"author@salo.com", password:"password", password_confirmation:"password")
-Journal.create(year:"2008", issue:"1/2", pages: "1-150", month:"March")
 
 

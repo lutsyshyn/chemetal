@@ -60,10 +60,10 @@ ActiveRecord::Schema.define(:version => 20130124141939) do
     t.string   "issue"
     t.string   "pages"
     t.integer  "year"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.string   "month"
-    t.boolean  "published"
+    t.boolean  "published",  :default => false
   end
 
   create_table "roles", :force => true do |t|
