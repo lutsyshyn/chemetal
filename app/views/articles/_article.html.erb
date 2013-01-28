@@ -1,18 +1,21 @@
-<div>
-  <%= render 'shared/title', title: article.title %>
-  <%= link_to_if(can?(:update, article), 'Edit', edit_article_path(article)) {} %>
-  <%= link_to_if(can?(:destroy, article), 'Delete', article_path(article), method: :delete, data: {confirm: 'Are you sure?'}) {} %>
-  <% if can?(:manage, Journal) %>
-    <%= article.proofed? ? 'proofed' : 'pending' %>
-  <% end %>
+<tr>
+  <td>
+    <%= render 'shared/title', title: article.title %>
+    <%= link_to_if(can?(:update, article), 'Edit', edit_article_path(article)) {} %>
+    <%= link_to_if(can?(:destroy, article), 'Delete', article_path(article), method: :delete, data: {confirm: 'Are you sure?'}) {} %>
+    <% if can?(:manage, Journal) %>
+      <% if article.proofed? %>
+        <span class="label label-success">Proofed</span>
+      <% else %>
+        <span class="label label-important">Not Proofed</span>
+      <% end %>
+    <% end %>
 
-  <%= render 'shared/authors', article: article %>
+    <%= render 'shared/authors', article: article %>
 
-  <div class="article_pages">
     <%= "Pages #{article.pages}" %>
-  </div>
-  <div class="article_links">
+
     <%= link_to 'Abstract', article_abstract_path(article) %> |
     <%= render "articles/attachments", :article => article %>
-  </div>
-</div>
+  </td>
+</tr>
