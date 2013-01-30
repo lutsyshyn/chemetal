@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :roles
 
-
+  has_many :edits, class_name: "Article", foreign_key: "editor_id"
 
   has_many :articles
   before_create :assign_role
@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
   def assign_role
     role = Role.find_by_name("author")
     self.roles = [role]
+  end
+
+  def self.editors
+    User.select {|user| user.has_role?(:editor)}
   end
 
 end

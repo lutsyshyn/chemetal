@@ -15,7 +15,10 @@ class ArticlesController < ApplicationController
       @article = @journal.articles.new
     end
 
-    @journals_select = Journal.unpublished.map { |journal| [journal.year, journal.id]}
+    @journals_select = Journal.unpublished.map { |journal| [journal.year, journal.id]} if current_user.has_role?(:admin)
+
+    @editors_select = User.editors.map { |editor| [editor.email, editor.id] } if current_user.has_role?(:admin)
+
     @article.build_abstract
     5.times { @article.authors.build }
     3.times { @article.attachments.build }
@@ -25,8 +28,7 @@ class ArticlesController < ApplicationController
     #@article = Article.find(params[:id])
     if current_user.has_role?(:admin)
       @journals_select = Journal.all.map { |journal| [journal.year, journal.id]}
-    else
-      @journals_select = Journal.unpublished.map { |journal| [journal.year, journal.id]}
+      @editors_select = User.editors.map { |editor| [editor.email, editor.id] }
     end
   end
 

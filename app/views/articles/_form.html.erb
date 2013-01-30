@@ -2,11 +2,6 @@
   <%= render 'shared/error_messages', object: f.object  %>
 
   <div class="controls-row">
-    <%= f.label :journal_id, class: "span1" %>
-    <%= f.select :journal_id, @journals_select %>
-  </div>
-
-  <div class="controls-row">
     <%= f.label :title, class: "span1" %>
     <%= f.text_field :title, class: "span4" %>
   </div>
@@ -63,6 +58,17 @@
   <p><%= f.link_to_add "Add another author", :authors %></p>
 
   <% if can?(:manage, Journal) %>
+
+    <div class="controls-row">
+      <%= f.label :journal_id, class: "span1" %>
+      <%= f.select :journal_id, @journals_select %>
+    </div>
+
+    <div class="controls-row">
+      <%= f.label :editor_id, class: "span1" %>
+      <%= f.select :editor_id, @editors_select %>
+    </div>
+
     <div class="controls-row">
       <%= f.label :proofed %>
       <%= f.check_box :proofed %>

@@ -9,6 +9,7 @@
       <% else %>
         <span class="label label-important">Not Proofed</span>
       <% end %>
+      <%= "Editor: #{article.editor.email}" if article.editor %>
     <% end %>
 
     <%= render 'shared/authors', article: article %>
