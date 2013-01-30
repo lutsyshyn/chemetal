@@ -25,7 +25,6 @@ class Ability
 
   def editor
     author
-
   end
 
 

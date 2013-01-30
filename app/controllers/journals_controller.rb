@@ -39,7 +39,7 @@ class JournalsController < ApplicationController
     #@journal =  Journal.find(params[:id])
     if @journal.update_attributes(params[:journal])
       flash[:success] = 'Journal edited successfully'
-      redirect_to @journal
+      redirect_to journals_url
     else
       render 'edit'
     end
@@ -53,13 +53,18 @@ class JournalsController < ApplicationController
 
   def publish_toggle
     @journal.toggle!(:published)
-    redirect_to journals_url
+    respond_to do |format|
+      format.html { redirect_to journals_url }
+      format.js
+    end
   end
 
   def visible_toggle
     @journal.toggle!(:visible)
-    redirect_to journals_url
+    respond_to do |format|
+      format.html { redirect_to journals_url }
+      format.js
+    end
   end
-
 
 end

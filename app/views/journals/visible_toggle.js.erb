@@ -1,0 +1,2 @@
+$("#visible_toggle_link_<%= @journal.id %>").html
+    ("<%= escape_javascript(visible_toggle_link_text(@journal).html_safe) %>");

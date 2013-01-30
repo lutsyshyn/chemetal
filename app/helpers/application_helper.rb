@@ -10,10 +10,23 @@ module ApplicationHelper
   end
 
   def publish_toggle_link_text(object)
-    object.published? ? "Unpublish" : "Publish"
+    if object.published?
+      #'<span class="label label-success">Published</span>'
+      '<button class="btn btn-mini btn-success" type="button">Published</button>'
+    else
+      #'<span class="label">Not Published</span>'
+      '<button class="btn btn-mini" type="button">Not Published</button>'
+    end
   end
+
   def visible_toggle_link_text(object)
-    object.visible? ? "Hide" : "Show"
+    if object.visible?
+      #'<span class="label label-success">Visible</span>'
+      '<button class="btn btn-mini btn-success" type="button">Visible</button>'
+    else
+      #'<span class="label">Hidden</span>'
+      '<button class="btn btn-mini" type="button">Hidden</button>'
+    end
   end
 
 

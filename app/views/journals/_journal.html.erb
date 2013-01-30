@@ -4,16 +4,23 @@
   <td><%= journal.pages %></td>
   <td><%= journal.month %></td>
   <td><%= journal.year %></td>
-  <td>
-      <%= link_to_if(can?(:manage, Journal), publish_toggle_link_text(journal),
-                     publish_toggle_journal_path(journal), data: {confirm: 'Are you sure?'}) %>
-  </td>
-  <td>
-    <%= link_to_if(can?(:manage, Journal), visible_toggle_link_text(journal),
-                   visible_toggle_journal_path(journal), data: {confirm: 'Are you sure?'}) %>
-  </td>
-  <td><%= link_to 'Show', journal %></td>
-  <td><%= link_to_if(can?(:manage, journal), 'Edit', edit_journal_path(journal)) {} %></td>
-  <td><%= link_to_if(can?(:manage, journal), 'Delete', journal, method: :delete,
-                     data: {confirm: 'Are you sure?'}) {} %></td>
+  <td><%= link_to '<button class="btn btn-mini btn-info" type="button">Show</button>'.html_safe, journal %></td>
+  <% if can?(:manage, Journal) %>
+    <td>
+      <%= link_to publish_toggle_link_text(journal).html_safe, publish_toggle_journal_path(journal),
+                  data: {confirm: 'Are you sure?'}, remote: true, id: "publish_toggle_link_#{journal.id}" %>
+    </td>
+    <td>
+      <%= link_to visible_toggle_link_text(journal).html_safe, visible_toggle_journal_path(journal),
+                  data: {confirm: 'Are you sure?'}, remote: true, id: "visible_toggle_link_#{journal.id}" %>
+    </td>
+
+    <td><%= link_to '<button class="btn btn-mini btn-warning" type="button">Edit</button>'.html_safe,
+                    edit_journal_path(journal) %></td>
+
+    <td><%= link_to '<button class="btn btn-mini btn-danger" type="button">Delete</button>'.html_safe,
+                    journal, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+
+  <% end %>
+
 </tr>
