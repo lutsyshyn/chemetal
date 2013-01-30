@@ -2,10 +2,15 @@
 <h1>Papers in preparation</h1>
 
 <% @journals.each do |journal| %>
-  <h3><%= "Volume #{journal.volume}, Issue #{journal.issue}, #{journal.month} #{journal.year}" %></h3>
-  <%= link_to_if(can?(:create, Article), 'Add new article to journal',
-                 new_journal_article_path(journal)) {} %><br/><br/>
+
+  <%= render "journals/caption", journal: journal %>
+
   <table class="table table-hover">
-    <%= render journal.articles %>
+    <% if can?(:manage, Journal) %>
+      <%= render journal.articles %>
+    <% else %>
+      <%= render journal.articles.visible %>
+    <% end %>
   </table>
+
 <% end %>

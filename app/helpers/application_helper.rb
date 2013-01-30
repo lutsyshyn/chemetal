@@ -9,7 +9,12 @@ module ApplicationHelper
     end
   end
 
-
+  def publish_toggle_link_text(object)
+    object.published? ? "Unpublish" : "Publish"
+  end
+  def visible_toggle_link_text(object)
+    object.visible? ? "Hide" : "Show"
+  end
 
 
 end

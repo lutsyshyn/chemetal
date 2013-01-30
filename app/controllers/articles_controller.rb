@@ -61,7 +61,11 @@ class ArticlesController < ApplicationController
   end
 
   def in_preparation
-    @journals = Journal.unpublished
+    if current_user && current_user.has_role?(:admin)
+      @journals = Journal.unpublished
+    else
+      @journals = Journal.unpublished.visible
+    end
   end
 
   def full_pdf

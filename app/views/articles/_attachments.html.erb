@@ -1,5 +1,5 @@
 
-<%= link_to 'Full text PDF', full_pdf_article_url(article) %>
+<%= link_to '| Full text PDF', full_pdf_article_url(article) if article.has_full_pdf? %>
 <% article.optional_attachments.each do |attachment| %>
   | <%= link_to attachment.description, get_file_article_url(article,attachment_id: attachment.id) %>
 <% end %>

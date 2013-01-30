@@ -1,11 +1,10 @@
 <% provide(:title, "Volume #{@journal.volume}, Issue #{@journal.issue}, #{@journal.month} #{@journal.year}") %>
 
-<h1><%= "Volume #{@journal.volume}, Issue #{@journal.issue}, #{@journal.month} #{@journal.year}" %></h1>
+<%= render "journals/caption", journal: @journal %>
 
-<%= link_to_if(can?(:create, Article), 'Add new article to journal',
-               new_journal_article_path(@journal)) {} unless @journal.published %>
-
-<%= render @articles %>
+<table class="table table-hover">
+  <%= render @articles %>
+</table>
 
 
 

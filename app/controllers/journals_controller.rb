@@ -17,10 +17,12 @@ class JournalsController < ApplicationController
 
   def show
     #@journal = Journal.find(params[:id])
-    if (current_user && current_user.has_role?(:admin)) || !@journal.published
+    if current_user && current_user.has_role?(:admin)
       @articles = @journal.articles.all
-    else
+    elsif @journal.published
       @articles = @journal.articles.proofed
+    else
+      @articles = @journal.articles.visible
     end
 
   end
@@ -46,6 +48,16 @@ class JournalsController < ApplicationController
   def destroy
     Journal.find(params[:id]).destroy
     flash[:success] = 'Journal deleted'
+    redirect_to journals_url
+  end
+
+  def publish_toggle
+    @journal.toggle!(:published)
+    redirect_to journals_url
+  end
+
+  def visible_toggle
+    @journal.toggle!(:visible)
     redirect_to journals_url
   end
 

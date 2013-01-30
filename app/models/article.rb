@@ -1,7 +1,7 @@
 class Article < ActiveRecord::Base
   attr_accessible :code, :journal_id, :pages, :supplementary_materials, :supporting_information,
                   :title, :abstract_attributes, :authors_attributes, :attachments_attributes, :user_id,
-                  :proofed
+                  :proofed, :locked, :visible
 
   has_one :abstract, dependent: :destroy
   has_many :authors, dependent: :destroy
@@ -18,6 +18,14 @@ class Article < ActiveRecord::Base
 
   def self.proofed
     Article.where(proofed: true)
+  end
+
+  def has_full_pdf?
+    Attachment.find_by_article_id_and_extension_and_description(id, 'pdf', '') != nil
+  end
+
+  def self.visible
+    Article.where(visible: true)
   end
 
 end

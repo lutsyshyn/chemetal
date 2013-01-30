@@ -13,9 +13,9 @@
 
     <%= render 'shared/authors', article: article %>
 
-    <%= "Pages #{article.pages}" %>
+    <%= "Pages #{article.pages}" if article.pages && !article.pages.empty? %>
 
-    <%= link_to 'Abstract', article_abstract_path(article) %> |
-    <%= render "articles/attachments", :article => article %>
+    <%= link_to 'Abstract', article_abstract_path(article) %>
+    <%= render "articles/attachments", article: article %>
   </td>
 </tr>

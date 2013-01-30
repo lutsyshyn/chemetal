@@ -1,5 +1,5 @@
 class Journal < ActiveRecord::Base
-  attr_accessible :issue, :pages, :volume, :year, :month, :published
+  attr_accessible :issue, :pages, :volume, :year, :month, :published, :visible
 
   has_many :articles, dependent: :destroy
 
@@ -9,6 +9,10 @@ class Journal < ActiveRecord::Base
 
   def self.unpublished
     Journal.where(published: false)
+  end
+
+  def self.visible
+    Journal.where(visible: true)
   end
 
 end

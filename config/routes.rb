@@ -6,6 +6,8 @@ Chemetal::Application.routes.draw do
   root :to => "journals#index"
 
   resources :journals, shallow: true do
+    get 'publish_toggle', on: :member
+    get 'visible_toggle', on: :member
     resources :articles do
       member do
         match 'images/:filename', to: 'articles#images'
