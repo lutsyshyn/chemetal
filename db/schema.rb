@@ -58,20 +58,15 @@ ActiveRecord::Schema.define(:version => 20130130145726) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "edits_editors", :id => false, :force => true do |t|
-    t.integer "edit_id"
-    t.integer "editor_id"
-  end
-
   create_table "journals", :force => true do |t|
     t.integer  "volume"
     t.string   "issue"
     t.string   "pages"
     t.integer  "year"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.string   "month"
-    t.boolean  "published"
+    t.boolean  "published",  :default => false
     t.boolean  "visible",    :default => true
   end
 

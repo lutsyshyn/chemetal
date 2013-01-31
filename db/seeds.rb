@@ -8,8 +8,12 @@
 
 Role.create(name:"admin")
 Role.create(name:"author")
+Role.create(name:"editor")
 User.create(email:"salo@salo.com", password:"password", password_confirmation:"password")
+User.find(1).update_attributes(role_ids: [1])
 User.create(email:"author@salo.com", password:"password", password_confirmation:"password")
-Journal.create(year:"2008", issue:"1/2", pages: "1-150", month:"March")
+User.create(email:"editor@salo.com", password:"password", password_confirmation:"password")
+User.find(3).update_attributes(role_ids: [3])
+Journal.create(volume: "1", year:"2008", issue:"1/2", pages: "1-150", month:"March")
 
 

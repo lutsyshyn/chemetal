@@ -25,6 +25,7 @@ class Ability
 
   def editor
     author
+    can :update, Article, editor_id: @user.id, locked: false
   end
 
 
