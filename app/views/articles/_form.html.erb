@@ -32,12 +32,15 @@
 
   <h5>Abstract</h5>
   <%= f.fields_for :abstract do |abstract_form| %>
-    <%= abstract_form.text_area :content, rows: "5", class: "span10" %><br/><br/>
+    <%= abstract_form.text_area :content, rows: "5", class: "span10", id: "abstract" %><br/><br/>
     <div class="controls-row">
       <%= abstract_form.label :keywords, class: "span1" %>
       <%= abstract_form.text_field :keywords, class: "span9" %>
     </div>
   <% end %>
+  <script type="text/javascript">
+    $('#abstract').wysihtml5();
+  </script>
 
   <h5>Authors</h5>
   <%= f.fields_for :authors do |authors_form| %>

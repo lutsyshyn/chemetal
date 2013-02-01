@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require_tree .
 //= require jquery_nested_form
+//= require bootstrap
+//= require bootstrap-wysihtml5
 
