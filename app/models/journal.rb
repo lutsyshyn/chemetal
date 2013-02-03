@@ -3,6 +3,8 @@ class Journal < ActiveRecord::Base
 
   has_many :articles, dependent: :destroy
 
+  #scope :published => { where(published: true) }
+
   def self.published
     Journal.where(published: true)
   end

@@ -1,6 +1,7 @@
   <div class="article_authors">
+    <!--move to helper-->
     <% authors = [] %>
-    <% article.authors.all.each do |author| %>
+    <% article.authors.each do |author| %>
       <% if !author.email.blank? %>
         <% authors << mail_to(author.email, author.name) %>
       <% else %>

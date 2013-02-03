@@ -10,7 +10,7 @@ class Attachment < ActiveRecord::Base
   mount_uploader :file, FileUploader
 
   def file_name_ext
-    file.url.split("/").last if !file.blank?
+    file.url.split("/").last unless file.blank?
   end
 
 

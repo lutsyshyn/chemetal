@@ -4,12 +4,13 @@ class Author < ActiveRecord::Base
   belongs_to :article
 
   def name
-    if !first_name.blank?
-      name = first_name
-    else
+    if first_name.present?
       name = initials
+    else
+      name = first_name
     end
-      return "#{name} #{last_name}"
+
+    "#{name} #{last_name}"
   end
 
 end

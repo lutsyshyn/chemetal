@@ -12,9 +12,9 @@ class ArticlesController < ApplicationController
 
     unless @journal
       @journal = Journal.unpublished.last
-      @article = @journal.articles.new
+      @article = @journal.article.build
     end
-
+    #<%= options_from_collection_for_select(City.all, :id, :name) %>
     @journals_select = Journal.unpublished.map { |journal| [journal.year, journal.id]} if current_user.has_role?(:admin)
 
     @editors_select = User.editors.map { |editor| [editor.email, editor.id] } if current_user.has_role?(:admin)
@@ -63,10 +63,10 @@ class ArticlesController < ApplicationController
   end
 
   def in_preparation
-    if current_user && current_user.has_role?(:admin)
-      @journals = Journal.unpublished
+    @journals = if current_user && current_user.has_role?(:admin)
+      Journal.unpublished
     else
-      @journals = Journal.unpublished.visible
+      Journal.unpublished.visible
     end
   end
 
