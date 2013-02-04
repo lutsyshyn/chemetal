@@ -5,9 +5,9 @@ class Author < ActiveRecord::Base
 
   def name
     if first_name.present?
-      name = initials
-    else
       name = first_name
+    else
+      name = initials
     end
 
     "#{name} #{last_name}"

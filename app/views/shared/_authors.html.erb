@@ -1,12 +1,3 @@
   <div class="article_authors">
-    <!--move to helper-->
-    <% authors = [] %>
-    <% article.authors.each do |author| %>
-      <% if !author.email.blank? %>
-        <% authors << mail_to(author.email, author.name) %>
-      <% else %>
-        <% authors << author.name %>
-      <% end %>
-    <% end %>
-    <%= authors.join(", ").html_safe %>
+    <%= authors_presenter(article) %>
   </div>

@@ -14,10 +14,6 @@ class ArticlesController < ApplicationController
       @journal = Journal.unpublished.last
       @article = @journal.article.build
     end
-    #<%= options_from_collection_for_select(City.all, :id, :name) %>
-    @journals_select = Journal.unpublished.map { |journal| [journal.year, journal.id]} if current_user.has_role?(:admin)
-
-    @editors_select = User.editors.map { |editor| [editor.email, editor.id] } if current_user.has_role?(:admin)
 
     @article.build_abstract
     5.times { @article.authors.build }
@@ -26,10 +22,6 @@ class ArticlesController < ApplicationController
 
   def edit
     #@article = Article.find(params[:id])
-    if current_user.has_role?(:admin)
-      @journals_select = Journal.all.map { |journal| [journal.year, journal.id]}
-      @editors_select = User.editors.map { |editor| [editor.email, editor.id] }
-    end
   end
 
   def update
