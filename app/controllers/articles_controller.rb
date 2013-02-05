@@ -16,7 +16,6 @@ class ArticlesController < ApplicationController
     end
 
     @article.build_abstract
-    #@article.authors.new(email: current_user.email)
     5.times { @article.authors.build }
     3.times { @article.attachments.build }
   end

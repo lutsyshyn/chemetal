@@ -67,6 +67,15 @@
 
   <p><%= f.link_to_add "Add another author", :authors %></p>
   </div>
+
+  <%= f.fields_for :assignments do |assignments_form| %>
+    <div class="controls-row">
+      <%= assignments_form.label :user_id, class: "span1" %>
+      <%= assignments_form.select :user_id, options_from_collection_for_select(User.all, :id, :email), prompt: 'Assign Reviewer' %>
+    </div>
+  <% end %>
+  <p><%= f.link_to_add "add another reviewer", :assignments %></p>
+
   <% if can?(:manage, Journal) %>
 
     <div class="controls-row">

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130130145726) do
+ActiveRecord::Schema.define(:version => 20130205171206) do
 
   create_table "abstracts", :force => true do |t|
     t.text     "content"
@@ -36,6 +36,13 @@ ActiveRecord::Schema.define(:version => 20130130145726) do
     t.boolean  "locked",                  :default => false
     t.boolean  "visible",                 :default => true
     t.integer  "editor_id"
+  end
+
+  create_table "assignments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "article_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "attachments", :force => true do |t|
