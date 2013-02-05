@@ -12,7 +12,8 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
 
   has_many :edits, class_name: "Article", foreign_key: "editor_id"
-  has_and_belongs_to_many :reviews, class_name: "Article"
+
+  #has_and_belongs_to_many :reviews, class_name: "Article"
 
   has_many :articles
   before_create :assign_role
