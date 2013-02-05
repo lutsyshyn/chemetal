@@ -8,6 +8,7 @@ class Article < ActiveRecord::Base
   has_many :attachments, dependent: :destroy
 
   belongs_to :editor, class_name: "User"
+  has_and_belongs_to_many :reviewers, class_name: "User"
 
   belongs_to :journal
 

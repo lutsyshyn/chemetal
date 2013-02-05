@@ -13,6 +13,7 @@ Chemetal::Application.routes.draw do
         match 'images/:filename', to: 'articles#images'
         get 'full_pdf'
         get 'get_file'
+        get 'received'
       end
       resource :abstract
     end

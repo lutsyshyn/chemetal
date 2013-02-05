@@ -24,7 +24,7 @@
       <%= attachment_form.label :description, class: "span1" %>
       <%= attachment_form.text_field :description, class: "span2" %>
       <%= attachment_form.text_field :file, class: "span6", disabled: true if attachment_form.object.persisted? %>
-      <%= attachment_form.file_field :file, class: "span6" if !attachment_form.object.persisted? %>
+      <%= attachment_form.file_field :file, class: "span6" unless attachment_form.object.persisted? %>
       <%= attachment_form.link_to_remove "Remove", class: "span1" %>
     </div>
   <% end %>
@@ -38,72 +38,35 @@
       <%= abstract_form.text_field :keywords, class: "span9" %>
     </div>
   <% end %>
-  <script type="text/javascript">
-//    $('#abstract').wysihtml5();
-$('#abstract').wysihtml5('deepExtend', {
-  stylesheets: ['/li3b_core/css/bootstrap.min.css'],
-  toolbar: {
-    speech: '<li>' +
-        '<a class="btn" data-wysihtml5-command="insertSpeech" title="Voice input" href="javascript:;" unselectable="on"><i class="icon-volume-up"></i></a>' +
-        '</li>',
-    code:  function(locale, options) {
-      return '<li><a class="btn" data-wysihtml5-command="formatInline" data-wysihtml5-command-value="code" href="javascript:;" unselectable="on"><i class="icon-th-large"></i></li>'
-    },
-    insertAnything:  function(locale, options) {
-      return '<li>' +
-          '<a class="btn" data-wysihtml5-command="insertHTML" href="javascript:;" data-toggle="modal" data-target="#insertAnythingModal" unselectable="on"><i class="icon-asterisk"></i></a>' +
-          '<div id="insertAnythingModal" data-wysihtml5-dialog="insertHTML" class="modal hide fade">' +
-          '<div class="modal-header">' +
-          '<a class="close" data-dismiss="modal">&times;</a>' +
-          '<h3>Insert Some Stuff</h3>' +
-          '</div>' +
-          '<div class="modal-body">' +
-          '<textarea id="myJazz"></textarea>' +
-          '</div>' +
-          '<div class="modal-footer">' +
-          '<a class="btn" href="javascript:;" data-dismiss="modal">Cancel</a>' +
-          '<a class="btn btn-primary" data-dismiss="modal" data-wysihtml5-command="insertHTML" onClick="$(this).attr(\'data-wysihtml5-command-value\', $(\'#myJazz\').val()); $(\'#myJazz\').val(\'\')" data-wysihtml5-command-value="jazz" href="javascript:;" unselectable="on">Insert</a>' +
-          '</div>' +
-          '</div>' +
-          '</li>';
-    },
-  },
-  html: true,
-  parserRules: {
-    classes: {
-      "middle": 1,
-      "icon-beer": 1,
-      "prettyprint": 1
-    },
-    tags: {
-      code: {},
-      pre: {},
-      strong: {},
-      em: {},
-      i: {}
-    }
-  }
-});
-  </script>
+
 
   <h5>Authors</h5>
-  <%= f.fields_for :authors do |authors_form| %>
-    <div class="controls-row">
-      <%= authors_form.label :initials, class: "span1" %>
-      <%= authors_form.text_field :initials, class: "span1" %>
-      <%= authors_form.label :first_name, class: "span1" %>
-      <%= authors_form.text_field :first_name, class: "span2"  %>
-      <%= authors_form.label :last_name, class: "span1" %>
-      <%= authors_form.text_field :last_name, class: "span2"  %>
-      <%= authors_form.label :email, class: "span1" %>
-      <%= authors_form.text_field :email, class: "span2" %>
-      <%= authors_form.link_to_remove "Remove", class: "span1"  %>
-    </div>
+  <div class="controls-row">
+    <table class = "span10">
+      <thead>
+        <tr>
+          <td>Initials</td>
+          <td>First Name</td>
+          <td>Last Name</td>
+          <td>Email</td>
+          <td></td>
+        </tr>
+      </thead>
+      <%= f.fields_for :authors do |authors_form| %>
+        <tr>
+          <td>
+            <%= authors_form.text_field :initials, class: "input-small"  %>
+          </td>
+          <td><%= authors_form.text_field :first_name, class: "input-small" %></td>
+          <td><%= authors_form.text_field :last_name, class: "input-small" %></td>
+          <td><%= authors_form.text_field :email, class: "input-small" %></td>
+          <td><%= authors_form.link_to_remove "Remove" %></td>
+        </tr>
+      <% end %>
+    </table>
 
-
-  <% end %>
   <p><%= f.link_to_add "Add another author", :authors %></p>
-
+  </div>
   <% if can?(:manage, Journal) %>
 
     <div class="controls-row">
@@ -113,7 +76,11 @@ $('#abstract').wysihtml5('deepExtend', {
 
     <div class="controls-row">
       <%= f.label :editor_id, class: "span1" %>
-      <%= f.select :editor_id, options_from_collection_for_select(User.editors, :id, :email) %>
+      <%= f.select :editor_id, options_from_collection_for_select(User.editors, :id, :email), prompt: 'Assign Editor' %>
+    </div>
+
+    <div class="controls-row">
+      <%= link_to('Send receipt confirmation', received_article_path(@article)) if @article.persisted? && !@article.locked %>
     </div>
 
     <div class="controls-row">

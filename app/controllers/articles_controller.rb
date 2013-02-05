@@ -12,10 +12,11 @@ class ArticlesController < ApplicationController
 
     unless @journal
       @journal = Journal.unpublished.last
-      @article = @journal.article.build
+      @article = @journal.articles.build
     end
 
     @article.build_abstract
+    #@article.authors.new(email: current_user.email)
     5.times { @article.authors.build }
     3.times { @article.attachments.build }
   end
@@ -35,7 +36,7 @@ class ArticlesController < ApplicationController
     #@article = @journal.articles.new(params[:article])
     @article.user_id = current_user.id
     flash[:success] = 'Article created' if @article.save
-    respond_with(@article)
+    respond_with @article
   end
   
   def show
@@ -51,7 +52,15 @@ class ArticlesController < ApplicationController
     #@journal = @article.journal
     @article.destroy
     flash[:success] = 'Article deleted'
-    respond_with (@journal)
+    respond_with (@article.journal)
+  end
+
+  def received
+    if UserMailer.receipt_confirmation(User.find(@article.user_id), @article).deliver
+      @article.update_attributes(locked: true)
+      flash[:success] = 'Receipt confirmation sent'
+      redirect_to edit_article_url(@article)
+    end
   end
 
   def in_preparation

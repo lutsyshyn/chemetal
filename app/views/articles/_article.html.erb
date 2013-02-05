@@ -3,13 +3,13 @@
     <%= render 'shared/title', title: article.title %>
     <%= link_to_if(can?(:update, article), 'Edit', edit_article_path(article)) {} %>
     <%= link_to_if(can?(:destroy, article), 'Delete', article_path(article), method: :delete, data: {confirm: 'Are you sure?'}) {} %>
+    <br>
     <% if can?(:manage, Journal) %>
-      <% if article.proofed? %>
-        <span class="label label-success">Proofed</span>
-      <% else %>
-        <span class="label label-important">Not Proofed</span>
-      <% end %>
-      <%= "Editor: #{article.editor.email}" if article.editor %>
+
+      <%= received_label(article).html_safe %>
+      <%= editor_label(article).html_safe %>
+      <%= proofed_label(article).html_safe %>
+
     <% end %>
 
     <%= render 'shared/authors', article: article %>

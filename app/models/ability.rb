@@ -23,9 +23,14 @@ class Ability
     can :destroy, Article, user_id: @user.id, locked: false
   end
 
+  def reviewer
+    author
+    can :update, Article, reviewer_id: @user.id
+  end
+
   def editor
     author
-    can :update, Article, editor_id: @user.id, locked: false
+    can :update, Article, editor_id: @user.id
   end
 
 
