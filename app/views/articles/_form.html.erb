@@ -68,25 +68,31 @@
   <p><%= f.link_to_add "Add another author", :authors %></p>
   </div>
 
-  <%= f.fields_for :assignments do |assignments_form| %>
-    <div class="controls-row">
-      <%= assignments_form.label :user_id, class: "span1" %>
-      <%= assignments_form.select :user_id, options_from_collection_for_select(User.all, :id, :email), prompt: 'Assign Reviewer' %>
-    </div>
-  <% end %>
-  <p><%= f.link_to_add "add another reviewer", :assignments %></p>
 
   <% if can?(:manage, Journal) %>
 
     <div class="controls-row">
       <%= f.label :journal_id, class: "span1" %>
-      <%= f.select :journal_id, options_from_collection_for_select(Journal.unpublished, :id, :year) %>
+      <%= f.collection_select :journal_id, Journal.unpublished, :id, :year %>
     </div>
+
+    <!--<div class="controls-row">-->
+      <!--<%= f.label :editor, class: "span1" %>-->
+      <!--<%= f.select :editor_id, User.editors.map { |editor| [editor.email, editor.id] }, prompt: 'Assign Editor' %>-->
+    <!--</div>-->
 
     <div class="controls-row">
       <%= f.label :editor_id, class: "span1" %>
-      <%= f.select :editor_id, options_from_collection_for_select(User.editors, :id, :email), prompt: 'Assign Editor' %>
+      <%= f.collection_select :editor_id, User.editors, :id, :email, prompt: 'Assign Editor' %>
     </div>
+
+    <%= f.fields_for :assignments do |assignments_form| %>
+      <div class="controls-row">
+        <%= assignments_form.label :user_id, class: "span1" %>
+        <%= assignments_form.collection_select :user_id, User.all, :id, :email, prompt: 'Assign Reviewer' %>
+      </div>
+    <% end %>
+    <p><%= f.link_to_add "add another reviewer", :assignments %></p>
 
     <div class="controls-row">
       <%= link_to('Send receipt confirmation', received_article_path(@article)) if @article.persisted? && !@article.locked %>

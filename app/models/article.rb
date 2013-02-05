@@ -10,9 +10,7 @@ class Article < ActiveRecord::Base
   belongs_to :editor, class_name: "User"
 
   has_many :assignments, dependent: :destroy
-  has_many :reviewers, through: :assignments
-
-
+  has_many :reviewers, class_name: "User", through: :assignments
 
   belongs_to :journal
 
