@@ -22,6 +22,7 @@ class ArticlesController < ApplicationController
 
   def edit
     #@article = Article.find(params[:id])
+    @article.assignments.build unless @article.reviewers.present?
   end
 
   def update
@@ -58,6 +59,21 @@ class ArticlesController < ApplicationController
     if UserMailer.receipt_confirmation(User.find(@article.user_id), @article).deliver
       @article.update_attributes(locked: true)
       flash[:success] = 'Receipt confirmation sent'
+      redirect_to edit_article_url(@article)
+    end
+  end
+
+  def confirm_editor
+    if UserMailer.confirm_editor(@article.editor, @article).deliver
+      flash[:success] = 'Editor confirmation sent'
+      redirect_to edit_article_url(@article)
+    end
+  end
+
+  def confirm_reviewer
+    @user = User.find(params[:user_id])
+    if UserMailer.confirm_reviewer(@user, @article).deliver
+      flash[:success] = 'Reviewer confirmation sent'
       redirect_to edit_article_url(@article)
     end
   end

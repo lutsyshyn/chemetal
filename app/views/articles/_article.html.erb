@@ -6,9 +6,11 @@
     <br>
     <% if can?(:manage, Journal) %>
 
-      <%= received_label(article).html_safe %>
-      <%= editor_label(article).html_safe %>
-      <%= proofed_label(article).html_safe %>
+      <%= status_label(article, "locked?", "Receipt sent", "Receipt not sent").html_safe %>
+      <%= status_label(article, "editor", "Editor assigned", "Editor not assigned").html_safe %>
+      <%= status_label(article, "reviewers", "Reviewer assigned", "Reviewer not assigned").html_safe %>
+      <%= status_label(article, "proofed?", "Proofed", "Not proofed").html_safe %>
+
 
     <% end %>
 

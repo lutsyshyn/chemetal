@@ -14,6 +14,8 @@ Chemetal::Application.routes.draw do
         get 'full_pdf'
         get 'get_file'
         get 'received'
+        get 'confirm_editor'
+        get 'confirm_reviewer'
       end
       resource :abstract
     end
