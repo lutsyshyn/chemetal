@@ -1,0 +1,18 @@
+= form_for @assessment, html: {class: "form-horizontal"} do |f|
+  = render 'shared/error_messages', object: f.object
+
+  - attributes = %w[novelty summary importance title abstract keywords credit clarity arguments reference tables illustrations language]
+  - attributes.each do |attribute|
+    = render 'shared/radio_marks', object: f.object, attribute_name: attribute
+
+  .control-group
+    = f.label :body, "Reviewer's comments"
+    = f.text_area :body, rows: '10', class: 'span8'
+
+    = f.hidden_field :user_id, value: current_user.id
+    = f.hidden_field :article_id, value: params[:article_id]
+
+
+  .control-group
+    = f.submit
+

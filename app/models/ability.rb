@@ -25,7 +25,9 @@ class Ability
 
   def reviewer
     author
-    can :update, Article, reviewer_id: @user.id
+    can :update, Article do |article|
+      article.reviewer_ids.include?(@user.id)
+    end
   end
 
   def editor

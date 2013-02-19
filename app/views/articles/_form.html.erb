@@ -76,11 +76,13 @@
       <%= f.collection_select :journal_id, Journal.unpublished, :id, :year %>
     </div>
 
-    <div class="controls-row">
-      <%= f.label :editor_id, class: "span1" %>
-      <%= f.collection_select :editor_id, User.editors, :id, :email, prompt: 'Assign Editor' %>
-      <%= link_to('Send editor confirmation', confirm_editor_article_path(@article), data: {confirm: 'Are you sure?'}) %>
-    </div>
+    <% if @article.persisted? %>
+      <div class="controls-row">
+        <%= f.label :editor_id, class: "span1" %>
+        <%= f.collection_select :editor_id, User.editors, :id, :email, prompt: 'Assign Editor' %>
+        <%= link_to('Send editor confirmation', confirm_editor_article_path(@article), data: {confirm: 'Are you sure?'}) %>
+      </div>
+    <% end %>
 
     <%= f.fields_for :assignments do |assignments_form| %>
       <div class="controls-row">
@@ -109,6 +111,21 @@
       <%= f.label :locked %>
       <%= f.check_box :locked %>
     </div>
+
+    <div class="controls-row">
+      <%= link_to 'Create new assessment', new_assessment_path(article_id: @article.id) %>
+    </div>
+
+    <% if @article.assessments.present? %>
+      <div class="controls-row">
+        <b>Assessments:</b><br>
+        <% @article.assessments.each do |assessment| %>
+          <%= link_to assessment.created_at, assessment_path(assessment) %>
+        <% end %>
+      </div>
+    <% end %>
+
+
   <% end %>
 
   <%= f.submit %>

@@ -64,9 +64,11 @@ class ArticlesController < ApplicationController
   end
 
   def confirm_editor
-    if UserMailer.confirm_editor(@article.editor, @article).deliver
-      flash[:success] = 'Editor confirmation sent'
-      redirect_to edit_article_url(@article)
+    if Rails.env == 'production'
+      if UserMailer.confirm_editor(@article.editor, @article).deliver
+        flash[:success] = 'Editor confirmation sent'
+        redirect_to edit_article_url(@article)
+      end
     end
   end
 

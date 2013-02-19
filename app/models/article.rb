@@ -12,6 +12,8 @@ class Article < ActiveRecord::Base
   has_many :assignments, dependent: :destroy
   has_many :reviewers, class_name: "User", through: :assignments, source: :user
 
+  has_many :assessments
+
   belongs_to :journal
 
   accepts_nested_attributes_for :abstract, allow_destroy: true
