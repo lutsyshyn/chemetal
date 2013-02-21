@@ -1,0 +1,7 @@
+.control-group
+  = label object.class.name.downcase, attribute_name, class: 'control-label'
+  .controls
+    - ('A'..'E').each do |mark|
+      %label{class: "radio inline"}
+        = radio_button_tag "#{object.class.name.downcase}[#{attribute_name}]", mark
+        = mark

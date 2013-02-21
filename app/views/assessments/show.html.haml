@@ -1,0 +1,11 @@
+%table.table.table-condensed.table-striped.span5
+  - attributes = %w[novelty summary importance title abstract keywords credit clarity arguments reference tables illustrations language]
+  - attributes.each do |attribute|
+    %tr
+      %td
+        %b= attribute.capitalize
+      %td
+        = @assessment.send(attribute)
+
+.span8
+  = @assessment.body

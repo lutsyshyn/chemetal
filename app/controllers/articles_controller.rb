@@ -1,8 +1,6 @@
 class ArticlesController < ApplicationController
 
-  load_and_authorize_resource :journal
-  load_and_authorize_resource :article, :through => :journal, shallow: true,
-                              except: [:full_pdf, :get_file, :images, :in_preparation]
+  load_and_authorize_resource :article, except: [:full_pdf, :get_file, :images, :in_preparation]
 
   respond_to :html
 
@@ -22,6 +20,7 @@ class ArticlesController < ApplicationController
 
   def edit
     #@article = Article.find(params[:id])
+    @article.assignments.build unless @article.reviewers.present?
   end
 
   def update
@@ -40,7 +39,7 @@ class ArticlesController < ApplicationController
   
   def show
     #@article = Article.find(params[:id])
-    redirect_to article_abstract_path(@article)
+    respond_with @article
   end
 
   def index
@@ -58,6 +57,23 @@ class ArticlesController < ApplicationController
     if UserMailer.receipt_confirmation(User.find(@article.user_id), @article).deliver
       @article.update_attributes(locked: true)
       flash[:success] = 'Receipt confirmation sent'
+      redirect_to edit_article_url(@article)
+    end
+  end
+
+  def confirm_editor
+    if Rails.env == 'production'
+      if UserMailer.confirm_editor(@article.editor, @article).deliver
+        flash[:success] = 'Editor confirmation sent'
+        redirect_to edit_article_url(@article)
+      end
+    end
+  end
+
+  def confirm_reviewer
+    @user = User.find(params[:user_id])
+    if UserMailer.confirm_reviewer(@user, @article).deliver
+      flash[:success] = 'Reviewer confirmation sent'
       redirect_to edit_article_url(@article)
     end
   end
@@ -81,6 +97,27 @@ class ArticlesController < ApplicationController
   def images
     send_file Attachment.find_by_article_id_and_filename_and_extension(params[:id], params[:filename], params[:format]).file.url,
               :type => 'image/jpeg', :disposition => 'inline'
+  end
+
+  def authored
+    @articles = current_user.articles
+    respond_with @articles do |format|
+      format.html {render 'index'}
+    end
+  end
+
+  def edited
+    @articles = current_user.edits
+    respond_with @articles do |format|
+      format.html {render 'index'}
+    end
+  end
+
+  def reviewed
+    @articles = current_user.reviews
+    respond_with @articles do |format|
+      format.html {render 'index'}
+    end
   end
 
 end

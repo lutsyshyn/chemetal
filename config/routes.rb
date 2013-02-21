@@ -2,24 +2,33 @@ Chemetal::Application.routes.draw do
 
   devise_for :users
   resources :users
+  resources :assessments
 
-  root :to => "journals#index"
-
-  resources :journals, shallow: true do
-    get 'publish_toggle', on: :member
-    get 'visible_toggle', on: :member
-    resources :articles do
-      member do
-        match 'images/:filename', to: 'articles#images'
-        get 'full_pdf'
-        get 'get_file'
-        get 'received'
-      end
-      resource :abstract
+  resources :articles do
+    member do
+      match 'images/:filename', to: 'articles#images'
+      get 'full_pdf'
+      get 'get_file'
+      get 'received'
+      get 'confirm_editor'
+      get 'confirm_reviewer'
+    end
+    collection do
+      get 'edited'
+      get 'authored'
+      get 'reviewed'
     end
   end
 
 
+  resources :abstracts
+
+  resources :journals do
+    get 'publish_toggle', on: :member
+    get 'visible_toggle', on: :member
+  end
+
+  root :to => "journals#index"
 
   match '/sign', to: 'static_pages#sign_in'
 
