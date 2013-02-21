@@ -1,9 +1,9 @@
-<%= link_to 'Back to Journal', journal_path(@article.journal) %><br/>
+<%= link_to 'Back to Journal', journal_path(@abstract.article.journal) %><br/>
 
 
-<%= render 'shared/title', title: @article.title %>
+<%= render 'shared/title', article: @abstract.article %>
 
-<%= render 'shared/authors', article: @article %>
+<%= render 'shared/authors', article: @abstract.article %>
 
 <div class="abstract_content">
   <%= @abstract.content.html_safe %>

@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
 
   has_many :edits, class_name: "Article", foreign_key: "editor_id"
+  has_many :assessments
 
   has_many :assignments, dependent: :destroy
   has_many :reviews, class_name: "Article", through: :assignments, source: :article

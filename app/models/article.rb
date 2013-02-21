@@ -12,12 +12,18 @@ class Article < ActiveRecord::Base
   has_many :assignments, dependent: :destroy
   has_many :reviewers, class_name: "User", through: :assignments, source: :user
 
+  has_many :assessments
+
   belongs_to :journal
 
   accepts_nested_attributes_for :abstract, allow_destroy: true
   accepts_nested_attributes_for :authors, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :assignments, allow_destroy: true, reject_if: :all_blank
+
+  #scope :authored, lambda { |user| where(user_id: user.id) }
+  #scope :edited, lambda { |user| where(editor_id: user.id) }
+  #scope :reviewed, lambda { |user| where(editor_id: user.id) }
 
   def optional_attachments
     attachments.where('description !=   ""')
