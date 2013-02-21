@@ -1,3 +1,2 @@
 <h2><%= "Volume #{journal.volume}, Issue #{journal.issue}, #{journal.month} #{journal.year}" %></h2>
-<%= link_to_if(can?(:create, Article), 'Add new article to journal',
-               new_journal_article_path(journal)) {} unless journal.published %>
+<%= link_to_if(can?(:create, Article), 'Add new article to journal', new_article_path) {} unless journal.published %>

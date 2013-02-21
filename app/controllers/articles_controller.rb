@@ -1,8 +1,6 @@
 class ArticlesController < ApplicationController
 
-  load_and_authorize_resource :journal
-  load_and_authorize_resource :article, :through => :journal, shallow: true,
-                              except: [:full_pdf, :get_file, :images, :in_preparation]
+  load_and_authorize_resource :article, except: [:full_pdf, :get_file, :images, :in_preparation]
 
   respond_to :html
 
@@ -41,7 +39,7 @@ class ArticlesController < ApplicationController
   
   def show
     #@article = Article.find(params[:id])
-    redirect_to article_abstract_path(@article)
+    respond_with @article
   end
 
   def index
@@ -99,6 +97,27 @@ class ArticlesController < ApplicationController
   def images
     send_file Attachment.find_by_article_id_and_filename_and_extension(params[:id], params[:filename], params[:format]).file.url,
               :type => 'image/jpeg', :disposition => 'inline'
+  end
+
+  def authored
+    @articles = current_user.articles
+    respond_with @articles do |format|
+      format.html {render 'index'}
+    end
+  end
+
+  def edited
+    @articles = current_user.edits
+    respond_with @articles do |format|
+      format.html {render 'index'}
+    end
+  end
+
+  def reviewed
+    @articles = current_user.reviews
+    respond_with @articles do |format|
+      format.html {render 'index'}
+    end
   end
 
 end

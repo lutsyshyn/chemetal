@@ -1,7 +1,8 @@
 <tr>
   <td>
-    <%= render 'shared/title', title: article.title %>
-    <%= link_to_if(can?(:update, article), 'Edit', edit_article_path(article)) {} %>
+    <%= render 'shared/title', article: article %>
+    <%= link_to 'Show', article_path(article) %>
+    <%= link_to_if((can?(:update, article) || can?(:make_edits, article) || can?(:review, article)), 'Edit', edit_article_path(article)) {} %>
     <%= link_to_if(can?(:destroy, article), 'Delete', article_path(article), method: :delete, data: {confirm: 'Are you sure?'}) {} %>
     <br>
     <% if can?(:manage, Journal) %>
@@ -18,7 +19,7 @@
 
     <%= "Pages #{article.pages}" if article.pages && !article.pages.empty? %>
 
-    <%= link_to 'Abstract', article_abstract_path(article) %>
+    <%= link_to 'Abstract', abstract_path(article.abstract) %>
     <%= render "articles/attachments", article: article %>
   </td>
 </tr>

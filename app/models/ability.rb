@@ -21,18 +21,23 @@ class Ability
     can :create, Article
     can :update, Article, user_id: @user.id, locked: false
     can :destroy, Article, user_id: @user.id, locked: false
+    can :authored, Article
+
   end
 
   def reviewer
     author
-    can :update, Article do |article|
+    can :review, Article do |article|
       article.reviewer_ids.include?(@user.id)
     end
+    can :reviewed, Article
   end
 
   def editor
     author
-    can :update, Article, editor_id: @user.id
+    can :make_edits, Article, editor_id: @user.id
+    can :edited, Article
+
   end
 
 

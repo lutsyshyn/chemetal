@@ -1,4 +1,4 @@
-<%= nested_form_for [@journal, @article], html: {class: "form-inline", multipart: true } do |f| %>
+<%= nested_form_for @article, html: {class: "form-inline", multipart: true } do |f| %>
   <%= render 'shared/error_messages', object: f.object  %>
 
   <div class="controls-row">
@@ -68,6 +68,34 @@
   <p><%= f.link_to_add "Add another author", :authors %></p>
   </div>
 
+  <% if can?(:make_edits, @article) %>
+    <%= f.fields_for :assignments do |assignments_form| %>
+      <div class="controls-row">
+        <%= assignments_form.label :user_id, class: "span1" %>
+        <%= assignments_form.collection_select :user_id, User.all, :id, :email, prompt: 'Assign Reviewer' %>
+        <%= link_to('Send reviewer confirmation', confirm_reviewer_article_path(@article, user_id: assignments_form.object.user_id),
+                    data: {confirm: 'Are you sure?'}) if assignments_form.object.user_id.present? %>
+        <%= assignments_form.link_to_remove "Remove" %>
+      </div>
+    <% end %>
+    <p><%= f.link_to_add "add another reviewer", :assignments %></p>
+
+    <% if @article.assessments.present? %>
+      <div class="controls-row">
+        <b>Assessments:</b><br>
+        <% @article.assessments.each do |assessment| %>
+          <%= link_to assessment.created_at, assessment_path(assessment) %>
+        <% end %>
+      </div>
+    <% end %>
+
+  <% end %>
+
+  <% if can?(:review, @article) %>
+    <div class="controls-row">
+      <%= link_to 'Create new assessment', new_assessment_path(article_id: @article.id) %>
+    </div>
+  <% end %>
 
   <% if can?(:manage, Journal) %>
 
@@ -79,21 +107,11 @@
     <% if @article.persisted? %>
       <div class="controls-row">
         <%= f.label :editor_id, class: "span1" %>
-        <%= f.collection_select :editor_id, User.editors, :id, :email, prompt: 'Assign Editor' %>
+        <%= f.collection_select :editor_id, User.editors, :id, :email, include_blank: true, prompt: 'Assign Editor' %>
         <%= link_to('Send editor confirmation', confirm_editor_article_path(@article), data: {confirm: 'Are you sure?'}) %>
       </div>
     <% end %>
 
-    <%= f.fields_for :assignments do |assignments_form| %>
-      <div class="controls-row">
-        <%= assignments_form.label :user_id, class: "span1" %>
-        <%= assignments_form.collection_select :user_id, User.all, :id, :email, prompt: 'Assign Reviewer' %>
-        <%= link_to('Send reviewer confirmation', confirm_reviewer_article_path(@article, user_id: assignments_form.object.user_id),
-                    data: {confirm: 'Are you sure?'}) if assignments_form.object.user_id.present? %>
-        <%= assignments_form.link_to_remove "Remove" %>
-      </div>
-    <% end %>
-    <p><%= f.link_to_add "add another reviewer", :assignments %></p>
 
     <div class="controls-row">
       <%= link_to('Send receipt confirmation', received_article_path(@article), data: {confirm: 'Are you sure?'}) if @article.persisted? && !@article.locked %>
@@ -111,20 +129,6 @@
       <%= f.label :locked %>
       <%= f.check_box :locked %>
     </div>
-
-    <div class="controls-row">
-      <%= link_to 'Create new assessment', new_assessment_path(article_id: @article.id) %>
-    </div>
-
-    <% if @article.assessments.present? %>
-      <div class="controls-row">
-        <b>Assessments:</b><br>
-        <% @article.assessments.each do |assessment| %>
-          <%= link_to assessment.created_at, assessment_path(assessment) %>
-        <% end %>
-      </div>
-    <% end %>
-
 
   <% end %>
 

@@ -1,0 +1,15 @@
+.user_nav
+  - if user_signed_in?
+    = link_to 'Your articles', authored_articles_path
+    - if can?(:edited, Article)
+      = link_to 'Your edits', edited_articles_path
+    - if can?(:reviewed, Article)
+      = link_to 'Your reviews', reviewed_articles_path
+    ||
+    = link_to "Edit profile", edit_user_registration_path
+    = link_to "Sign out [#{current_user.email}]", destroy_user_session_path, :method => :delete
+    %br
+      - else
+    = link_to "Sign up", new_user_registration_path
+    or
+    = link_to "Sign in", new_user_session_path

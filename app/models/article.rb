@@ -21,6 +21,10 @@ class Article < ActiveRecord::Base
   accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :assignments, allow_destroy: true, reject_if: :all_blank
 
+  #scope :authored, lambda { |user| where(user_id: user.id) }
+  #scope :edited, lambda { |user| where(editor_id: user.id) }
+  #scope :reviewed, lambda { |user| where(editor_id: user.id) }
+
   def optional_attachments
     attachments.where('description !=   ""')
   end

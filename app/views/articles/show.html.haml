@@ -1,0 +1,18 @@
+%b Title:
+= render 'shared/title', article: @article
+= render 'shared/authors', article: @article
+%b Code:
+= @article.code
+%br
+%b Pages:
+= @article.pages
+%br
+= render "articles/attachments", article: @article
+
+%b Abstract
+%br
+= @article.abstract.content.html_safe
+%br
+%b Keywords:
+= @article.abstract.keywords
+%br

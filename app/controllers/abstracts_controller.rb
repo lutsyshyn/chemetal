@@ -6,7 +6,6 @@ class AbstractsController < ApplicationController
   end
 
   def set_variables
-    @article = Article.find(params[:article_id])
-    @abstract = @article.abstract
+    @abstract = Abstract.find(params[:id])
   end
 end
